@@ -978,11 +978,46 @@ echo $#  //Izpiše koliko argumentov imamo
 
 
 
+-----------------------------------------
+PKCS
+-----------------------------------------
+PKIX - Public-Key Infrastructure X.509
+PKCS - Public-Key Cryptography Standards
+CMS - Cryptographic Message Syntax
+
+Encoding:
+PEM (Privacy Enhanced Mail) base64 encoding with header and footer lines. 
+DER (Distinguished Encoding Rules) is a binary encoding for X. 509 certificates and private keys. Mostly in Java
+
+
+.key - usaly private key (PKCS#8), password protected or not
+
+.csr, .req. p10 Certificate Signing Request. PKCS#10, publicKey, CN, ...
+
+.crt, .cer - certificate, usually an X509v3 - signature by the Certificate Authority
+
+.p8, pkcs8 - not that important
+
+.p12, .pfx - PKCS#12 defined key store, commonly password protected. 
+certificates, private key(s) and their certificate chain. Usaly DER(binary) encoded.
+
+.crl - Certificate Revocation List which is defined within the X.509v3 certificate specifications, and this is usually DER encoded
+
+
+.jks - Java Key Store, store private keys with their certificate chains
 
 -----------------------------------------
 openssl
 -----------------------------------------
 openssl version -d
+
+-lahko zakodiraš datoteke (AES)
+
+Generate Key Pair
+openssl genrsa -des3 -out private.pem 2048
+
+Extract Public Key
+openssl rsa -in private.pem -outform PEM -pubout -out public.pem
 
 -----------------------------------------
 BREW
