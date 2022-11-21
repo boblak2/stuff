@@ -981,6 +981,7 @@ echo $#  //Izpiše koliko argumentov imamo
 -----------------------------------------
 PKCS
 -----------------------------------------
+PKI - Public key infrastructure
 PKIX - Public-Key Infrastructure X.509
 PKCS - Public-Key Cryptography Standards
 CMS - Cryptographic Message Syntax
@@ -1018,6 +1019,13 @@ openssl genrsa -des3 -out private.pem 2048
 
 Extract Public Key
 openssl rsa -in private.pem -outform PEM -pubout -out public.pem
+
+
+crl - Certificate Revocation List:
+- Seznam kamor pogleda browser, če je certificat veljaven.
+- Browser preveri preko:
+	-CA (or CRL issuer)
+	-preko OCSP (online certificate status protocol)
 
 -----------------------------------------
 BREW
