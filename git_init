@@ -1011,7 +1011,7 @@ openssl
 -----------------------------------------
 openssl version -d
 
--lahko zakodiraš datoteke (AES)
+-lahko zakodiraš datoteke (npr. AES)
 
 Generate Key Pair
 openssl genrsa -des3 -out private.pem 2048
