@@ -279,6 +279,7 @@ sleep 10 &
 echo $PATH
 echo $HOME
 echo $BASH  - izpiše podatke o interpreterju
+echo $RANDOM - izbriše random cifrom
 
 ifconfig eth0 up/down
 
@@ -621,8 +622,8 @@ https://ryanstutorials.net/bash-scripting-tutorial
 
 
 argumenti programa:
-
-$1
+$0 - Ime skripte
+$1 - prvi param
 $2
 .
 .
@@ -993,7 +994,7 @@ DER (Distinguished Encoding Rules) is a binary encoding for X. 509 certificates 
 
 .key - usaly private key (PKCS#8), password protected or not
 
-.csr, .req. p10 Certificate Signing Request. PKCS#10, publicKey, CN, ...
+.csr, .req. p10 - Certificate Signing Request. PKCS#10, publicKey, CN, ...
 
 .crt, .cer - certificate, usually an X509v3 - signature by the Certificate Authority
 
@@ -1070,6 +1071,44 @@ brew instal grep //na Macu že imaš grep (BSD), ta ukaz prenese grep (GNU) in g
 Python
 -----------------------------------------
 python3 -m http.server //Starts http server http://localhost:8000
+
+
+-----------------------------------------
+WGET
+-----------------------------------------
+
+-downloading webpages or files
+
+wget https://file-examples.com/wp-content/uploads/2017/02/file-sample_100kB.doc
+
+
+//Save file with new name
+-O
+wget -O word-file-test.doc https://file-examples.com/wp-content/uploads/2017/02/file-sample_100kB.doc
+
+-----------------------------------------
+CURL
+-----------------------------------------
+-lets you interact with the remote server. 
+It can upload files as well as retrieve them
+
+
+curl https://reqbin.com/echo
+
+-H //add headers
+curl https://reqbin.com/echo -H "Cache-Control: must-revalidate" -H "Pragma: no-cache" -H "..."
+
+//Get only headers
+curl -I https://reqbin.com/echo
+
+//follow redirects
+curl -L https://reqbin.com/echo
+
+//send cookies
+curl https://reqbin.com/echo -b "session=eJwlzj0wMQG7eO4Q"
+
+//Get Json
+curl https://reqbin.com/echo/get/json -H "Accept: application/json"
 
 ------------------------------------------------------------------------------------------------------------
 ------------------------------------ V I M --------------------------------------------------------------
