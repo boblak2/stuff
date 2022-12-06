@@ -1110,6 +1110,51 @@ curl https://reqbin.com/echo -b "session=eJwlzj0wMQG7eO4Q"
 //Get Json
 curl https://reqbin.com/echo/get/json -H "Accept: application/json"
 
+
+-----------------------------------------
+NMAP
+-----------------------------------------
+-Detects network vulnarbilities
+
+-----------------------------------------
+Osint framawork
+-----------------------------------------
+https://osintframework.com/
+
+
+-----------------------------------------
+DOCKER
+-----------------------------------------
+
+-Virtual machines - simulirajo harwere
+
+Ubuntu/Windows/...
+hypervisor (npr. vmwere)
+hardwere
+
+-Docker
+
+Ubuntu / CentOS / Debian
+Docker Engine
+ubuntu (os just one)
+hardwere
+
+
+docker pull centos 
+
+docker run -d -t --name burek centos
+
+docker ps //izpiše vse conteinarje če tečejo
+
+docker exec -it burek bash // connect to centos  //-bash- da se povežežš na bash od centosa
+exit // da se vrneš na host OS (pri meni Mac)
+
+docker stop burek //ustavi container
+docker start burek //ponovno zažene container
+
+hub.docker.com // conteinerji od dockerja
+
+
 ------------------------------------------------------------------------------------------------------------
 ------------------------------------ V I M --------------------------------------------------------------
 ------------------------------------------------------------------------------------------------------------
