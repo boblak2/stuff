@@ -1,0 +1,32 @@
+----------------------------------
+FFMPEG
+----------------------------------
+
+- genpts //generate Presentation TimeStamp
+
+//Webm -> mp4
+ffmpeg -fflags +genpts -i 1.webm -r 24 1.mp4
+
+Reduce Bitrate:
+ffmpeg -i input.mkv -c:a copy -c:v libx264 -b:v 1M output.mp4
+
+Reduce Framerate:
+ffmpeg -i input.mkv -c:a copy -c:v libx264 -r 24 output.mp4
+
+Reduce Resolution:
+ffmpeg -i input.mkv -c:a copy -c:v libx264 -s 848x480 output.mp4
+
+Reduce Bitrate, Framerate, and Resolution:
+ffmpeg -i input.mkv -c:a copy -c:v libx264 -s 848x480 output.mp4
+
+Trim:
+ffmpeg -i input.mkv -ss 00:00:10 -t 10 output.mkv
+
+Crop:
+ffmpeg -i input.mkv -filter:v "crop=1280:720:0:0" output.mkv
+
+Watermark:
+ffmpeg -i input.mkv -i watermark.png -filter_complex "overlay=50:50" output.mkv
+
+Overlay Videos:
+ffmpeg -i input.mkv -i input2.mkv -filter_complex "[0:v][1:v] overlay=25:25" output.webm

@@ -251,6 +251,19 @@ POSIX
 The Portable Operating System Interface (POSIX) // zbirka standardov, da so OS-i lahko kompatibilni med sabo.
 
  -------------------------
+ daemon
+ -------------------------
+- Background process for system
+
+- če se proces konča z "d" potem je Deamon npr. "sshd"
+
+- Main deamon is "systemd"
+
+ps aux //gledaš končnice "d"
+
+-pstree //izpise vse procese
+
+ -------------------------
  wc -l barry.txt > myoutput //zapiše v datoteko
 
  wc -l barry.txt >> myoutput //appenda v datoteko
