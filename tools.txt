@@ -1,8 +1,31 @@
 ----------------------------------
 FFMPEG
 ----------------------------------
+-https://ostechnix.com/20-ffmpeg-commands-beginners/
 
-- genpts //generate Presentation TimeStamp
+--------------------------------------------------------------------------------------------
+ffmpeg [GLOBAL OPTIONS] {[input_options] -i input_url} ... {[output_options] output_url}
+--------------------------------------------------------------------------------------------
+
+-genpts //generate Presentation TimeStamp
+-re //read input at native frame rate
+-b  //bitrate
+-r  //FPS - frames per second
+-copy //stream copy
+-map  //stream selection. If map not present ffmpeg use auto selection of stream. -map 0 uses all stream from file0.
+
+-vn //skip video
+-an //skip audio
+-dn //skip data
+-sn //skip subtitle
+-stream_loop X //0- no loop, -1 - infinite loop
+
+-i //input
+-y //overide output files
+-n //do not
+
+//File info
+ffmpeg -i in.mp4
 
 //Webm -> mp4
 ffmpeg -fflags +genpts -i 1.webm -r 24 1.mp4
@@ -30,3 +53,36 @@ ffmpeg -i input.mkv -i watermark.png -filter_complex "overlay=50:50" output.mkv
 
 Overlay Videos:
 ffmpeg -i input.mkv -i input2.mkv -filter_complex "[0:v][1:v] overlay=25:25" output.webm
+
+//Create gif
+ffmpeg -ss 00:00:20 -i sample.mp4 -to 10 -r 10 -vf scale=200:-1 stuff.gif
+
+//Speed up or Slow down the video
+ffmpeg -i input.mp4 -filter:v "setpts=0.125*PTS" output.mp4
+
+
+STREAMING:
+udp:
+ffmpeg -i INPUT -f mpegts udp://host:port
+
+rtsp:
+ffmpeg -i input -f rtsp -rtsp_transport tcp rtsp://localhost:8888/live.sdp
+
+https://github.com/aler9/rtsp-simple-server
+
+
+----------------------------------
+FFPLAY
+----------------------------------
+
+-loop 3 //-1 infinite
+
+-ss 10  // from where to start
+
+-t duration
+
+Keyboard:
+-p //pause
+
+-s //frame by frame
+
