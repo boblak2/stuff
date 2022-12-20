@@ -24,6 +24,14 @@ ffmpeg [GLOBAL OPTIONS] {[input_options] -i input_url} ... {[output_options] out
 -y //overide output files
 -n //do not
 
+
+-----------
+tbn = the time base in AVStream that has come from the container
+tbc = the time base in AVCodecContext for the codec used for a particular stream
+tbr = tbr is guessed from the video stream and is the value users want to see when they look for the video frame rate
+-----------
+
+
 //File info
 ffmpeg -i in.mp4
 
@@ -59,6 +67,12 @@ ffmpeg -ss 00:00:20 -i sample.mp4 -to 10 -r 10 -vf scale=200:-1 stuff.gif
 
 //Speed up or Slow down the video
 ffmpeg -i input.mp4 -filter:v "setpts=0.125*PTS" output.mp4
+
+Desaturate  (black white)
+ffmpeg -i input -vf hue=s=0 output
+
+Grayscale
+ffmpeg -i input -vf format=gray output
 
 
 STREAMING:
