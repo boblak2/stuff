@@ -68,8 +68,10 @@ ffmpeg -i INPUT -f mpegts udp://host:port
 rtsp:
 ffmpeg -i input -f rtsp -rtsp_transport tcp rtsp://localhost:8888/live.sdp
 
+Links:
 https://github.com/aler9/rtsp-simple-server
 
+https://ezgif.com/webp-to-mp4
 
 ----------------------------------
 FFPLAY
