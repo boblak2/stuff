@@ -65,6 +65,9 @@ STREAMING:
 udp:
 ffmpeg -i INPUT -f mpegts udp://host:port
 
+//Multicast
+ffmpeg.exe -threads 2 -re -fflags +genpts -stream_loop -1 -i 2020-06-30_13-42-56_primary_camera.ts -map 0:0 -c copy -map 0:1 -c copy -f mpegts udp://239.2.3.1:112233
+
 rtsp:
 ffmpeg -i input -f rtsp -rtsp_transport tcp rtsp://localhost:8888/live.sdp
 
