@@ -1184,6 +1184,33 @@ add_executable(Burek main.c)
 3) cd output
 4) make
 
+-----------------------------------------
+pgk-config
+-----------------------------------------
+
+Return metainformation about installed libraries
+
+pgk-config ffmpeg --libs
+
+
+-----------------------------------------
+AWK
+-----------------------------------------
+awk '{print $0}' //0 - vse
+awk '{print $1}' //1 - prvi stolpec
+
+awk -F ":" '{print $0" "$3" "$5}' //-F separator - default je space ' '
+
+{print $NF} //zadnji column
+
+{print $3 + $4} //add column 3 and 4
+
+awk 'length($3) > 5' //izpise stolpce vecje od 5
+
+awk '{ if($NF == "/bin/zsh") print $0}' /etc/shells  //if statement
+
+awk 'BEGIN {for(i=0; i < 10; i++) print "result:", i, i*i;}' //for loop
+
 
 ------------------------------------------------------------------------------------------------------------
 ------------------------------------ V I M --------------------------------------------------------------
