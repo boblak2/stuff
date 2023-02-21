@@ -1196,6 +1196,11 @@ pgk-config ffmpeg --libs
 -----------------------------------------
 AWK
 -----------------------------------------
+
+awk - original
+nawk - new awk - better version
+gawk - Gnu Awk
+
 awk '{print $0}' //0 - vse
 awk '{print $1}' //1 - prvi stolpec
 

@@ -1,10 +1,8 @@
 -docker
 -digital signiture
--ffmpeg -map
--Lightning
 -OpenCV
--Carmenta Tutorial
 -dependency injection
 -c# extentions
 -c# services (BackgroundService)
 -sdp file
+-ip/mask, OpenVPN
