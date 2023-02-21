@@ -1217,6 +1217,22 @@ awk '{ if($NF == "/bin/zsh") print $0}' /etc/shells  //if statement
 awk 'BEGIN {for(i=0; i < 10; i++) print "result:", i, i*i;}' //for loop
 
 
+BEGIN {awk-commands} //optional
+/pattern/ {awk-commands}  //Body
+END {awk-commands}
+
+
+command.awk //save awk command to file
+awk -f command.awk test.txt
+
+
+-v 
+awk -v name=Jerry 'BEGIN{printf "Name = %s\n", name}'
+
+
+awk '/a/ {print $0}' marks.txt //izpise vse, ki imajo a notri
+
+
 ------------------------------------------------------------------------------------------------------------
 ------------------------------------ V I M --------------------------------------------------------------
 ------------------------------------------------------------------------------------------------------------
