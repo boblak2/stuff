@@ -6,3 +6,5 @@
 -c# services (BackgroundService)
 -sdp file
 -ip/mask, OpenVPN
+-Entety framework - db
+-c# Thread safty

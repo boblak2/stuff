@@ -346,7 +346,10 @@ Redirecting stdout and stderr to the Same File
 
 ------------------------
 
-TAR:
+TAR: //tar = tape archive
+//tar is just bundles files together (the result is called a tarball)
+//tar file is NOT compressed like zip file is.
+
 tar cvf mojTest.tar test.txt
 (c-create, v-izpis v konzolo, file)
 
@@ -631,7 +634,7 @@ $1 - group1
 https://ryanstutorials.net/bash-scripting-tutorial
 ------------------------------------------------------------------------------------------------------------
 
-#!/bin/bash    //Shebeg - kje se nahaja interpreter
+#!/bin/bash    //Shebeng - kje se nahaja interpreter
 
 
 argumenti programa:
@@ -673,7 +676,7 @@ read -sp 'Password: ' passvar -> Password:
 Let
 let <arithmetic expression>
 
-let a=5+4  -> PAZI NA PRESLEDKE (obratono kot let)
+let a=5+4  -> PAZI NA PRESLEDKE (obratno kot let)
 echo $a # 9
 
 let "a = 5 + 4"
@@ -1139,7 +1142,7 @@ https://osintframework.com/
 DOCKER
 -----------------------------------------
 
--Virtual machines - simulirajo harwere
+-Virtual machines - simulirajo hardwere
 
 Ubuntu/Windows/...
 hypervisor (npr. vmwere)
@@ -1219,14 +1222,15 @@ awk 'BEGIN {for(i=0; i < 10; i++) print "result:", i, i*i;}' //for loop
 
 BEGIN {awk-commands} //optional
 /pattern/ {awk-commands}  //Body
-END {awk-commands}
+END {awk-commands}   //optional
 
 
+-f  //file
 command.awk //save awk command to file
 awk -f command.awk test.txt
 
 
--v 
+-v //var, value
 awk -v name=Jerry 'BEGIN{printf "Name = %s\n", name}'
 
 
@@ -1254,6 +1258,7 @@ G + line_nuber //skoči v določeno vrstico
 dd // zbriše vrstico
 G //gre v zadnjo vrstico
 
+12 + G //skoči v 12 vrstico
 
 
 
