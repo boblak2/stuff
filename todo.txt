@@ -8,3 +8,5 @@
 -ip/mask, OpenVPN
 -Entety framework - db
 -c# Thread safty
+-autoconf
+-C libs

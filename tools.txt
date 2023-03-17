@@ -97,6 +97,8 @@ https://github.com/aler9/rtsp-simple-server
 
 https://ezgif.com/webp-to-mp4
 
+https://handbrake.fr/docs/en/1.6.0/workflow/open-video-source.html
+
 ----------------------------------
 FFPLAY
 ----------------------------------
