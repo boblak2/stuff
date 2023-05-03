@@ -10,3 +10,9 @@
 -c# Thread safty
 -autoconf
 -C libs
+----------
+black modul for tablet
+background service
+c# service
+c# binding template
+android app sharing resources
