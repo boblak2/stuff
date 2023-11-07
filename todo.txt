@@ -1,18 +1,16 @@
 -docker
--digital signiture
--OpenCV
 -dependency injection
 -c# extentions
--c# services (BackgroundService)
--sdp file
 -ip/mask, OpenVPN
 -Entety framework - db
 -c# Thread safty
--autoconf
--C libs
 ----------
 black modul for tablet
 background service
 c# service
 c# binding template
+c# Tasks
+------------------
 android app sharing resources
+louncher app
+IPC - beetween apps (android/win)
