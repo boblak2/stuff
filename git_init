@@ -1082,6 +1082,20 @@ Location:
 
 brew instal grep //na Macu že imaš grep (BSD), ta ukaz prenese grep (GNU) in ga uporabljaš kot ggrep (ima prefix g)
 
+-----------------------------------------
+pmset - power manager set
+-----------------------------------------
+
+sudo pmset repeat sleep MTWRFSU 00:45:00 //sleep
+sudo pmset repeat sleep MTWRFSU 15:45:00
+
+sudo pmset repeat restart MTWRFSU 03:00:00 //restart
+
+pmset -g
+pmset -g sched
+
+sudo pmset repeat cancel //pobriše vse
+
 
 -----------------------------------------
 Python
@@ -1235,6 +1249,74 @@ awk -v name=Jerry 'BEGIN{printf "Name = %s\n", name}'
 
 
 awk '/a/ {print $0}' marks.txt //izpise vse, ki imajo a notri
+
+
+-----------------------------------------
+GCC - compile
+-----------------------------------------
+
+gcc -o name main.c
+
+-Wall //Enable every warning
+
+-Werror //Convert warnings into errors
+
+-l //Link with a shared library
+gcc main.c -o Hello -lpthread
+
+-L //link the external libraries
+gcc -L/home/user/LHB -o main.c Results -lLHB
+
+compiling stages:
+-E //preprocesor 
+
+-S //get assembly code
+
+-C //compiled code
+
+-save-temps // == -E -S -C gets all 3 stages
+gcc -save-temps main.c
+
+
+-fPIC //position-independent code
+gcc -c -Wall -Werror -fPIC main.c
+gcc -shared -o libmain.so main.o
+
+
+-V //verbose output of compilation
+gcc -Wall -v main.c -o Result
+
+//File
+1) Save to file (Burek):
+-Wall -Werror -save-temps
+
+gcc main.c @Burek
+
+
+STATIC Library:
+
+ar rcs libneki.a add.o
+r-replace, c-create, s-index
+
+
+link:
+gcc -o out main.o libneki.a
+
+gcc -o out -L . main.o -lneki
+
+-I //kje išče header fajle
+-L //library path
+-l npr. -lstuff  //name of library
+
+gcc main.c -L libs -lstuff -I inc -o out
+main.c
+#include<stdio.h> //išče na standardnih mestih za library
+#include "stuff.h" //išče header v trenutnem folderju + standarna mesta
+
+
+SHARED Library
+
+
 
 
 ------------------------------------------------------------------------------------------------------------
