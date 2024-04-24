@@ -368,7 +368,7 @@ SHA-1:
 sha1sum fileName.zip
 
 SSH:
-keys locatio: /Users/blazoblak/.ssh/
+keys location: /Users/blazoblak/.ssh/
 
 WHICH:
 which ls
