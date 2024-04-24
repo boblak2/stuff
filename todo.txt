@@ -3,20 +3,10 @@
 -c# extentions
 -ip/mask, OpenVPN
 -Entety framework - db
--c# Thread safty
-----------
-black modul for tablet
-background service
-c# service
-c# binding template
-android app sharing resources
 -------------
 mono
 jetpack
 compose
+kotlin
 =======
-c# Tasks
-------------------
-android app sharing resources
-louncher app
-IPC - beetween apps (android/win)
+git visual studio
