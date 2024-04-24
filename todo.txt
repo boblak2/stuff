@@ -9,6 +9,12 @@ black modul for tablet
 background service
 c# service
 c# binding template
+android app sharing resources
+-------------
+mono
+jetpack
+compose
+=======
 c# Tasks
 ------------------
 android app sharing resources
