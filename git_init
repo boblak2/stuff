@@ -1277,6 +1277,9 @@ compiling stages:
 -save-temps // == -E -S -C gets all 3 stages
 gcc -save-temps main.c
 
+------------------
+gcc -c main.c //mali c
+------------------
 
 -fPIC //position-independent code
 gcc -c -Wall -Werror -fPIC main.c
