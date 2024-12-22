@@ -219,6 +219,23 @@ git remote set-url origin git@gl.digied.si:blaz/moj_telekom_android.git
 git remote -v
 
 -----------------------------------------------------------------------------------------------
+git stash //stashes working and index
+git stash pop //
+git stash applay // does not remove from stash
+
+git stash -u //adds untracked files(not added yet)
+
+git stash
+git stash
+git stash
+
+git stash list 
+git stash applay stash@{2}
+
+git stash clear
+
+
+-----------------------------------------------------------------------------------------------
 GITLAB youtube tutorila
 https://www.youtube.com/watch?v=QCZl0eNzMTs&list=PLLnpHn493BHGgDmJGfCzRYRkFYWcRrxDT&index=2
 
