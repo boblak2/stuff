@@ -239,7 +239,28 @@ git stash show
 git stash -m "nameOfStash"
 
 git stash pop --index 1
+git stash pop 1 // 1- index
 
+-----------------------------------------------------------------------------------------------
+git revert //FOR REMOTE branches
+
+- It does not delete the commit instead makes a new commit that contains the removed changes from the commit.
+
+-When it points to a branch, Git doesn't complain, but when you check out a commit, 
+it switches into a "detached HEAD" state.
+
+- When use checkout commit you are not on any branch.
+
+-----------------------------------------------------------------------------------------------
+git checkout
+HEAD to point to either the specified branch or commit.
+
+
+
+----------------------
+Decorate
+A dog
+git log --all --decorate --oneline --graph
 
 -----------------------------------------------------------------------------------------------
 GITLAB youtube tutorila
