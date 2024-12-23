@@ -251,6 +251,9 @@ it switches into a "detached HEAD" state.
 
 - When use checkout commit you are not on any branch.
 
+git revert HEAD
+git revert 162ab5b
+
 -----------------------------------------------------------------------------------------------
 git checkout
 HEAD to point to either the specified branch or commit.
