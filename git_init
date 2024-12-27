@@ -265,6 +265,14 @@ Decorate
 A dog
 git log --all --decorate --oneline --graph
 
+
+----------------------
+.gitignore
+
+test.py
+*.py
+img/  //for images
+
 -----------------------------------------------------------------------------------------------
 GITLAB youtube tutorila
 https://www.youtube.com/watch?v=QCZl0eNzMTs&list=PLLnpHn493BHGgDmJGfCzRYRkFYWcRrxDT&index=2
