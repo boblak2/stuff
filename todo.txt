@@ -11,6 +11,8 @@ kotlin
 =======
 git visual studio
 logging
-devOps (debug, task)
-allServices check
 UnitTest
+-------
+c# tutorial
+UnitTest
+CodeCleanup
