@@ -1,0 +1,8 @@
+gradle
+
+gradlew build
+gradle.settings //where it looks what to build
+
+gradlew clean //cleans build folder
+
+gradlew test //run tests
