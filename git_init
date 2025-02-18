@@ -1371,7 +1371,24 @@ main.c
 
 SHARED Library
 
+------------------------------------------------
+Networking:
 
+192.168.0.2 /24. //ip - cidr (classless inter-domain routing)
+255.255.255.0   //mask
+
+192.168.0.0     //network
+0.0.0.2 //host
+192.168.0.255 //broadcast
+
+
+mask != subnet mask
+
+
+why do we have subnets inside companies - becasuse they will all broadcast eachother to find out who is who
+If one device needs to address othe device first it sends broadst.
+
+That is why we use routers to make subnets. And we create subnets using the mask.
 
 
 ------------------------------------------------------------------------------------------------------------
