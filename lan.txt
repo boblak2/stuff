@@ -101,15 +101,50 @@ gradle.taskGraph.whenReady {
 }
 
 DEX files (Dalvik executables)
+--------------------
+
+settings.gradle
+
+pluginManagement {
+    repositories {
+        gradlePluginPortal()
+        google()
+        mavenCentral()
+    }
+    includeBuild("../neki")
+}
+
+dependencyResolutionManagement {
+	repositories {
+        google()
+        mavenCentral()
+    }
+    includeBuild("../neki")
+}
+
+rootProject="nameOfproject"
+
+include ':app'
+include ':mylibrary'
 
 
 
+-------------------------------------------
+-------------------------------------------
+dotnet
 
+dotnet new sln
 
+dotnet new classlib
 
+dotnet sln add PrimeService/PrimeService.csproj
 
+mkdir PrimeService.Tests && cd PrimeService.Tests //make new dir and move to it
+dotnet new nunit // add unittest
 
+dotnet add reference ../PrimeService/PrimeService.csproj
 
+dotnet sln add ./PrimeService.Tests/PrimeService.Tests.csproj
 
 
 
