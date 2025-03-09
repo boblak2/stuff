@@ -1,18 +1,14 @@
 -docker
 -dependency injection
--c# extentions
--ip/mask, OpenVPN
 -Entety framework - db
 -------------
 mono
 jetpack
 compose
 kotlin
-=======
-git visual studio
-logging
-UnitTest
--------
-c# tutorial
-UnitTest
-CodeCleanup
+constraintLayout
+==========
+C#
+extention
+records
+unitTest
