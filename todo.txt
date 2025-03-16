@@ -13,3 +13,5 @@ extention
 records
 unitTest
 awaitable Task
+linq // .where(i=> i.Len < 100)
+lambda	

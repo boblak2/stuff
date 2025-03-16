@@ -147,9 +147,15 @@ dotnet add reference ../PrimeService/PrimeService.csproj
 dotnet sln add ./PrimeService.Tests/PrimeService.Tests.csproj
 
 
+-------------------------------------------
+C#
+-------------------------------------------
 
+https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/operators/conditional-operator
 
-
+private async Task GetData(){ //Task == void
+	
+}
 
 
 
