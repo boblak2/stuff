@@ -128,6 +128,14 @@ include ':app'
 include ':mylibrary'
 
 
+-----------------------------------
+jitpack.io //for publishing library
+
+1) upload to githib
+
+2) go to jitpack and past url of git repo
+
+3) that is that
 
 -------------------------------------------
 -------------------------------------------
