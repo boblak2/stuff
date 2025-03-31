@@ -165,6 +165,13 @@ private async Task GetData(){ //Task == void
 	
 }
 
+---------------
+Operator ??=
+
+// if a is null then assign 0 to a and add a to the list
+numbers.Add(a ??= 0);
+
+
 
 
 
