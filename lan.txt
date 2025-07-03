@@ -137,6 +137,20 @@ jitpack.io //for publishing library
 
 3) that is that
 
+
+
+-------------------------------------------
+JNI - Java native Interface
+-------------------------------------------
+
+*.so - shared lib
+*.a  - static lib
+JNI - interface where Java and C/C++ can talk to one another.
+ABI - application Binary Interface (armv7, ...)
+Android.mk - file describing the native library, including name, flags, linked libraries, and source files
+
+
+
 -------------------------------------------
 -------------------------------------------
 dotnet
