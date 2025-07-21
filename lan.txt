@@ -148,7 +148,63 @@ JNI - Java native Interface
 JNI - interface where Java and C/C++ can talk to one another.
 ABI - application Binary Interface (armv7, ...)
 Android.mk - file describing the native library, including name, flags, linked libraries, and source files
+Application.mk - 
 
+
+
+jni
+- Android.mk
+- Application.mk
+- keys.c
+
+
+-----------
+Android.mk:
+LOCAL_PATH := $(call my-dir)
+
+include $(CLEAR_VARS)
+
+LOCAL_MODULE    := keys
+LOCAL_SRC_FILES := keys.c
+
+include $(BUILD_SHARED_LIBRARY)
+
+---------
+Application.mk
+APP_ABI := all
+
+-------------
+MainActivity.java
+
+static {
+    System.loadLibrary("keys");
+}
+
+
+----------
+Gradle
+
+android {
+    .....
+    buildTypes {
+        .....
+    }
+    externalNativeBuild {
+        ndkBuild {
+            path 'src/main/jni/Android.mk'
+        }
+    }
+}
+--
+or
+--
+
+./ndk-buils
+/Users/blazoblak/Library/Android/sdk/ndk/27.0.12077973
+
+./ndk-build -C /Users/blazoblak/Documents/work/SomeArrMaker/app/src/main/jni
+//Creates folder libs where you rename it to:
+"jniLibs"
 
 
 -------------------------------------------

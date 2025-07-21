@@ -92,6 +92,9 @@ ffmpeg -i input -f mpegts udp://hostname:port?pkt_size=188&buffer_size=65535
 -Restream multicast:
 ffmpeg.exe -i udp://239.2.3.1:12345 -map 0:0 -c copy -map 0:1 -c copy -f mpegts udp://192.168.35.100:11024?pkt_size=1316
 
+
+ffmpeg -protocol_whitelist file,http,https,tcp,tls,crypto -i $url -c copy video2.mp4
+
 Links:
 https://github.com/aler9/rtsp-simple-server
 
