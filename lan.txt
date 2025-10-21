@@ -202,7 +202,7 @@ or
 ./ndk-buils
 /Users/blazoblak/Library/Android/sdk/ndk/27.0.12077973
 
-./ndk-build -C /Users/blazoblak/Documents/work/SomeArrMaker/app/src/main/jni
+./ndk-build -C /Users/blazoblak/Documents/work/SomeArrMaker/app/src/main/jni //do not forget -C
 //Creates folder libs where you rename it to:
 "jniLibs"
 
@@ -242,7 +242,111 @@ Operator ??=
 numbers.Add(a ??= 0);
 
 
+---------------
+LINQ
 
+var numCount = numbers.Count(n => n is > 3 and < 7);
+
+---------------
+Tasks:
+---------------
+Task t1 = new Task(() =>
+{
+    Console.WriteLine("Hello, World!");
+    Console.WriteLine("Hello, World!");
+    Console.WriteLine("Hello, World!");
+});
+t1.Start();
+t1.Wait();
+Console.WriteLine($"Rs:{2+3}");
+
+--
+Task taskA = Task.Run( () => Console.WriteLine("Hello from taskA."));
+
+// Output a message from the calling thread.
+Console.WriteLine($"Hello from thread '{Thread.CurrentThread.Name}'.");
+taskA.Wait();
+---
+Task[] taskArray = new Task[10];
+- adding work to tasks
+
+Task.WaitAll(taskArray);
+
+----
+var outer = Task.Factory.StartNew(() => work());
+-----
+Task[] tasks = new Task[3]
+{
+    Task.Factory.StartNew(() => MethodA()),
+    Task.Factory.StartNew(() => MethodB()),
+    Task.Factory.StartNew(() => MethodC())
+};
+
+//Block until all tasks complete.
+Task.WaitAll(tasks);
+
+------------
+Action:
+------------
+
+Action<int, String> print = (a, b) =>
+{
+    Console.WriteLine("Hello, World!");
+};
+print.Invoke(1, string.Empty);
+
+------------
+Funct
+------------
+Func<int, float, float> calculate = (a, b) =>
+{
+    return a + b;
+};
+
+------------
+Cancalation token
+------------
+
+var ctx = new CancellationTokenSource();
+var token = ctx.Token;
+
+
+if (token.IsCancellationRequested)
+{
+    Console.WriteLine("Cancelled");
+    break;
+}
+
+ctx.Cancel(); //canceling token
+
+------------
+async / await
+------------
+
+public async Task<string> GetStuff(){
+	
+	return "stuff";
+}
+
+string d = await GetStuff();
+
+------
+async Task Stuff1() {}
+async Task Stuff2() {}
+
+var tasks = new List<Task>() { Stuff1(), Stuff2() };
+
+await Task.WhenAll(tasks);  //first executes first method then second
+
+
+await Task.Factory.StartNew(Stuff1).ContinueWith((t)=>Stuff2());
+
+
+
+
+------------
+Extentions todo
+------------
 
 
 
