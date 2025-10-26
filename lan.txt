@@ -345,9 +345,28 @@ await Task.Factory.StartNew(Stuff1).ContinueWith((t)=>Stuff2());
 
 
 ------------
-Extentions todo
+Extentions
 ------------
 
+public record Person(string FirstName, string LastName);
+
+
+
+public record Person
+{
+    public required string FirstName { get; init; }
+    public required string LastName { get; init; }
+};
+
+------
+public readonly record struct Point(double X, double Y, double Z);
+
+public record struct Point
+{
+    public double X { get; init; }
+    public double Y { get; init; }
+    public double Z { get; init; }
+}
 
 
 
