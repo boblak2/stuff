@@ -399,6 +399,14 @@ grep -r hello /sys/ &> /dev/null // stdout, stderr gresta oba v /dev/null
 Redirecting stdout and stderr to the Same File
 ./error.sh > capture.txt 2>&1 // stream 2 preusmeri na isti naslov kot stream1
 
+------
+2>&1
+------
+2>1 //At first, 2>1 may look like a good way to redirect stderr to stdout. However, it will actually be interpreted as "redirect stderr to a file named 1".
+& indicates that what follows and precedes is a file descriptor, and not a filename. Thus, we use "2>&1". Consider >& to be a redirect merger operator.
+2>&1 //correct - kewl
+
+
 ------------------------
 
 TAR: //tar = tape archive
@@ -1416,7 +1424,9 @@ G //gre v zadnjo vrstico
 
 
 
-
+-------------------------------------------------
+GIT
+-------------------------------------------------
 Git global setup
 
 git config --global user.name "blaz oblak"
@@ -1447,6 +1457,17 @@ git remote rename origin old-origin
 git remote add origin git@gl.digied.si:blaz/test_blaz.git
 git push -u origin --all
 git push -u origin --tags
+
+
+------
+rename branch
+------
+
+git -m new_name //if you are on old branch
+
+git -m old_name new_name //globaly
+
+
 
 
 

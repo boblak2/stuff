@@ -369,4 +369,46 @@ public record struct Point
 }
 
 
+-------------------------------------------
+C 
+-------------------------------------------
+
+char arr[10];
+char *pa = arr; //first field is address
+
+
+*(pa + 3) = 'A'; //fourth element is now A
+
+
+
+------------------
+struct Person{
+    char name[10];
+    int age;
+};
+
+
+struct person p;
+struct person *pp = &p;
+
+
+strcpy(p.name, "test"); // use .
+p.age = 23;
+
+
+
+strcpy(p->name, "test"); //use ->
+p->age = 23;
+
+------------------
+#define ANDROID_FONT_PATH "/system/fonts"
+
+
+
+
+
+
+
+
+
 
