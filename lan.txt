@@ -373,6 +373,13 @@ public record struct Point
 C 
 -------------------------------------------
 
+#include
+
+#include<conio.h>
+#include<stdio.h>
+#include <stdlib.h>
+
+
 char arr[10];
 char *pa = arr; //first field is address
 
@@ -380,6 +387,16 @@ char *pa = arr; //first field is address
 *(pa + 3) = 'A'; //fourth element is now A
 
 
+int sub(int a, int b){return a+b;}
+
+--------------------
+pointer to function:
+
+int(*mp)(int, int);
+mp = &add;
+
+int res = mp(3, 5);
+printf("%d\n", res);
 
 ------------------
 struct Person{
@@ -402,10 +419,59 @@ p->age = 23;
 
 ------------------
 #define ANDROID_FONT_PATH "/system/fonts"
+-----------
 
 
+-----------
+typedef:
+-----------
+
+typedef struct 
+{
+    int i;
+    char k;
+} elem;
+
+elem user;
+
+-----------
+malloc, calloc, free
+-----------
+
+int *ptr = (int *)malloc(20);
+
+int *ptr = (int *)malloc(sizeof(int) * 5);
 
 
+// Checking if failed or pass
+if (ptr == NULL) {
+    printf("Allocation Failed");
+    exit(0);
+}
+
+--------
+calloc()
+--------
+//The calloc() (stands for contiguous allocation) function is similar to malloc(), 
+but it initializes the allocated memory to zero. It is used when you need memory with default zero values. 
+
+int *ptr = (int *)calloc(5, sizeof(int));
+
+--------
+realloc()
+--------
+function is used to resize a previously allocated memory block.
+
+int *ptr = (int *)malloc(5 * sizeof(int));
+
+// Resize the memory block to hold 10 integers
+ptr = (int *)realloc(ptr, 10 * sizeof(int));
+
+// Check for allocation failure
+if (ptr == NULL) {
+    printf("Memory Reallocation Failed");
+    exit(0);
+}
 
 
 

@@ -117,3 +117,18 @@ Keyboard:
 
 -s //frame by frame
 
+
+
+
+----------------------------------
+Wire shark
+----------------------------------
+
+Filters:
+udp, tcp
+
+tcp contains youtube
+
+
+
+
