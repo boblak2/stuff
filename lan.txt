@@ -370,7 +370,7 @@ public record struct Point
 
 
 -------------------------------------------
-C 
+C ANSI
 -------------------------------------------
 
 #include
@@ -472,6 +472,49 @@ if (ptr == NULL) {
     printf("Memory Reallocation Failed");
     exit(0);
 }
+
+--------
+extern
+--------
+
+C uses undividual units when compiling, with "exter" we tell compiler that we are using it here,
+but it is decleared somewhere else.
+
+Example:
+
+stdio.h
+int errno; //not extern
+
+myCFile1.c
+#include <stdio.h>
+
+myCFile2.c
+#include <stdio.h>
+
+
+if myCFile1.o and myCFile2.o are linked, each of the c files have separate copies of errno.
+This is a problem as the same errno is supposed to be available in all linked files.  //ful bed :(
+
+
+stdio.h
+extern int errno;
+
+stdio.c
+int errno;
+
+
+
+myCFile1.c
+#include <stdio.h>
+
+myCFile2.c
+#include <stdio.h>
+
+
+Now if both myCFile1.o and MyCFile2.o are linked by the linker they will 
+both point to the same errno. Thus, solving the implementation with extern. :) //yeah
+
+
 
 
 
