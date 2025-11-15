@@ -514,7 +514,18 @@ myCFile2.c
 Now if both myCFile1.o and MyCFile2.o are linked by the linker they will 
 both point to the same errno. Thus, solving the implementation with extern. :) //yeah
 
+----------------
+Static variable
+----------------
 
+It is initialized only once and is not destroyed when the function returns.
+
+Static variables are generally declared inside functions.
+
+outside functions - Global scope
+
+Global static variables have their scope limited to the file they are defined in (internal linkage). 
+It means that they cannot be accessed outside the current translation unit (C source file).
 
 
 
