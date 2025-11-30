@@ -1330,7 +1330,9 @@ gcc main.c -o Hello -lpthread
 -L //link the external libraries
 gcc -L/home/user/LHB -o main.c Results -lLHB
 
+-----------------------
 compiling stages:
+-----------------------
 -E //preprocesor 
 
 -S //get assembly code
