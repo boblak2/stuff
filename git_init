@@ -1249,6 +1249,142 @@ hub.docker.com // conteinerji od dockerja
 
 
 -----------------------------------------
+Make
+-----------------------------------------
+
+targets: prerequisites //(prerequisites=predpogoj)
+    command
+    command
+    command
+
+- Makefiles must be indented using TABs and not spaces or make will fail.
+
+1) Variables:
+Typically use :=, but = also works.
+
+-----
+files := file1 file2
+some_file: $(files)
+
+a := one two# a is set to the string "one two"
+b := 'one two' # Not recommended. b is set to the string "'one two'"
+-----
+
+Reference variables using either ${} or $()
+x := dude
+
+all:
+    echo $(x)
+    echo ${x}
+
+    # Bad practice, but works
+    echo $x 
+
+------
+
+$@ is an automatic variable that contains the target name.
+
+all:
+    echo $@
+
+--------------
+* Wildcard
+    
+
+oth * and % are called wildcards in Make, but they mean entirely different things. * searches your filesystem for matching filenames. 
+I suggest that you always wrap it in the wildcard function, because otherwise you may fall into a common pitfall described below.
+
+* may be used in the target, prerequisites, or in the wildcard function.
+
+Danger: * may not be directly used in a variable definitions
+
+Danger: When * matches no files, it is left as it is (unless run in the wildcard function)
+-------
+# Print out file information about every .c file
+print: $(wildcard *.c)
+    ls -la  $?
+
+--------
+
+thing_wrong := *.o # Don't do this! '*' will not get expanded
+thing_right := $(wildcard *.o)
+
+--------------
+% Wildcard
+
+% is really useful, but is somewhat confusing because of the variety of situations it can be used in.
+
+- When used in "matching" mode, it matches one or more characters in a string. This match is called the stem.
+- When used in "replacing" mode, it takes the stem that was matched and replaces that in a string.
+- % is most often used in rule definitions and in some specific functions.
+
+
+---------------
+Automatic Variables
+
+hey: one two
+    # Outputs "hey", since this is the target name
+    echo $@
+
+    # Outputs all prerequisites newer than the target
+    echo $?
+
+    # Outputs all prerequisites
+    echo $^
+
+    # Outputs the first prerequisite
+    echo $<
+
+    touch hey
+
+one:
+    touch one
+
+two:
+    touch two
+
+-----------------
+Implicit Rules
+
+
+- Compiling a C program: n.o is made automatically from n.c with a command of the form $(CC) -c $(CPPFLAGS) $(CFLAGS) $^ -o $@
+- Compiling a C++ program: n.o is made automatically from n.cc or n.cpp with a command of the form $(CXX) -c $(CPPFLAGS) $(CXXFLAGS) $^ -o $@
+- Linking a single object file: n is made automatically from n.o by running the command $(CC) $(LDFLAGS) $^ $(LOADLIBES) $(LDLIBS) -o $@
+
+
+CC: Program for compiling C programs; default cc
+CXX: Program for compiling C++ programs; default g++
+CFLAGS: Extra flags to give to the C compiler
+CXXFLAGS: Extra flags to give to the C++ compiler
+CPPFLAGS: Extra flags to give to the C preprocessor
+LDFLAGS: Extra flags to give to compilers when they are supposed to invoke the linker
+
+example:
+CC = gcc # Flag for implicit rules
+CFLAGS = -g # Flag for implicit rules. Turn on debug info
+
+# Implicit rule #1: blah is built via the C linker implicit rule
+# Implicit rule #2: blah.o is built via the C compilation implicit rule, because blah.c exists
+blah: blah.o
+
+blah.c:
+    echo "int main() { return 0; }" > blah.c
+
+clean:
+    rm -f blah*
+
+--------------------
+Error handling with -k, -i, and -
+
+Add -k when running make to continue running even in the face of errors. Helpful if you want to see all the errors of Make at once.
+Add a - before a command to suppress the error
+Add -i to make to have this happen for every command.
+
+
+https://makefiletutorial.com/
+
+
+-----------------------------------------
 CMake
 -----------------------------------------
 
