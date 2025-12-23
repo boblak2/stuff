@@ -528,6 +528,32 @@ Global static variables have their scope limited to the file they are defined in
 It means that they cannot be accessed outside the current translation unit (C source file).
 
 
+-----------------
+Flags
+-----------------
+
+gcc -o name main.c
+
+-Wall //Enable every warning
+
+-Werror //Convert warnings into errors
+
+-l //Link with a shared library
+gcc main.c -o Hello -lpthread
+
+-L //link the external libraries
+gcc -L/home/user/LHB -o main.c Results -lLHB
+
+-g //include debug information
+
+-std=c99 //standard
+
+
+
+
+
+
+
 
 
 

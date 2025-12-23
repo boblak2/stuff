@@ -1251,6 +1251,12 @@ hub.docker.com // conteinerji od dockerja
 -----------------------------------------
 Make
 -----------------------------------------
+https://makefiletutorial.com/
+
+
+Makefile //create make file
+
+make
 
 targets: prerequisites //(prerequisites=predpogoj)
     command
@@ -1258,6 +1264,12 @@ targets: prerequisites //(prerequisites=predpogoj)
     command
 
 - Makefiles must be indented using TABs and not spaces or make will fail.
+
+burek:
+    echo "called only one"
+
+burek: main.c
+    echo "called anytime main.c is modified"
 
 1) Variables:
 Typically use :=, but = also works.
@@ -1374,6 +1386,70 @@ clean:
     rm -f blah*
 
 --------------------
+Static Pattern Rules
+
+
+targets...: target-pattern: prereq-patterns ...
+   commands
+
+
+
+The essence is that the given target is matched by the target-pattern (via a % wildcard). Whatever was matched is called the stem. The stem is then substituted into the prereq-pattern, to generate the target's prereqs.
+
+objects = foo.o bar.o all.o
+all: $(objects)
+    $(CC) $^ -o all
+
+# Syntax - targets ...: target-pattern: prereq-patterns ...
+# In the case of the first target, foo.o, the target-pattern matches foo.o and sets the "stem" to be "foo".
+# It then replaces the '%' in prereq-patterns with that stem
+$(objects): %.o: %.c
+    $(CC) -c $^ -o $@
+
+all.c:
+    echo "int main() { return 0; }" > all.c
+
+# Note: all.c does not use this rule because Make prioritizes more specific matches when there is more than one match.
+%.c:
+    touch $@
+
+clean:
+    rm -f *.c *.o all
+
+
+--------------------
+Command Echoing/Silencing:
+
+Add an @ before a command to stop it from being printed
+You can also run make with -s to add an @ before each line 
+
+all: 
+    @echo "This make line will not be printed"
+    echo "But this will"
+
+--------------------
+Default Shell
+
+The default shell is /bin/sh. You can change this by changing the variable SHELL
+SHELL=/bin/bash
+
+cool:
+    echo "Hello from bash"
+
+--------------------
+Recursive use of make: //da zaženeš drug make file
+To recursively call a makefile, use the special $(MAKE) instead of make because it will pass the make flags for you and won't itself be affected by them.
+
+new_contents = "hello:\n\ttouch inside_file"
+all:
+    mkdir -p subdir
+    printf $(new_contents) | sed -e 's/^ //' > subdir/makefile
+    cd subdir && $(MAKE)
+
+clean:
+    rm -rf subdir
+
+--------------------
 Error handling with -k, -i, and -
 
 Add -k when running make to continue running even in the face of errors. Helpful if you want to see all the errors of Make at once.
@@ -1381,7 +1457,102 @@ Add a - before a command to suppress the error
 Add -i to make to have this happen for every command.
 
 
-https://makefiletutorial.com/
+---------------------
+Variables:
+
++= - append
+?= only sets variables if they have not yet been set
+
+one = hello
+one ?= will not be set
+two ?= will be set
+
+----------------------
+Command line arguments and override
+
+make option_one=hi //command
+
+# Overrides command line arguments
+override option_one = did_override
+# Does not override command line arguments
+option_two = not_override
+all: 
+    echo $(option_one)
+    echo $(option_two)
+
+--------
+if/else
+
+foo = ok
+
+all:
+ifeq ($(foo), ok)
+    echo "foo equals ok"
+else
+    echo "nope"
+endif
+------------------
+Check if a variable is defined
+
+bar =
+foo = $(bar)
+
+all:
+ifdef foo
+    echo "foo is defined"
+endif
+ifndef bar
+    echo "but bar is not"
+endif
+---------------------
+$(MAKEFLAGS)
+
+make -i
+all:
+# Search for the "-i" flag. MAKEFLAGS is just a list of single characters, one per flag. So look for "i" in this case.
+ifneq (,$(findstring i, $(MAKEFLAGS)))
+    echo "i was passed to MAKEFLAGS"
+endif
+
+-----------------
+Functions
+
+Call functions with $(fn, arguments) or ${fn, arguments}
+
+bar := ${subst not,"totally", "I am not superman"}
+all: 
+    @echo $(bar)
+-------------------
+The call function:
+
+sweet_new_fn = Variable Name: $(0) First: $(1) Second: $(2) Empty Variable: $(3)
+
+all:
+    # Outputs "Variable Name: sweet_new_fn First: go Second: tigers Empty Variable:"
+    @echo $(call sweet_new_fn, go, tigers)
+
+---------------------
+vpath Directive
+
+Use vpath to specify where some set of prerequisites exist. The format is vpath <pattern> <directories, space/colon separated> <pattern> can have a %, which matches any zero or more characters. You can also do this globallyish with the variable VPATH
+
+------------------
+.phony
+
+Adding .PHONY to a target will prevent Make from confusing the phony target with a file name.
+
+some_file:
+    touch some_file
+    touch clean
+
+.PHONY: clean
+clean:
+    rm -f some_file
+    rm -f clean
+
+
+
+
 
 
 -----------------------------------------
@@ -1466,9 +1637,29 @@ gcc main.c -o Hello -lpthread
 -L //link the external libraries
 gcc -L/home/user/LHB -o main.c Results -lLHB
 
+-g //include debug information
+
+-std=c99 //standard
+
 -----------------------
 compiling stages:
 -----------------------
+.c
+|
+| preprocesor compile  //-s -e
+|
+.s
+|
+| assemblie           //-c
+|
+.o
+|
+| linker
+|
+.exe
+
+
+
 -E //preprocesor 
 
 -S //get assembly code
@@ -1477,11 +1668,6 @@ compiling stages:
 
 -save-temps // == -E -S -C gets all 3 stages
 gcc -save-temps main.c
-
-
--fPIC //position-independent code
-gcc -c -Wall -Werror -fPIC main.c
-gcc -shared -o libmain.so main.o
 
 
 -V //verbose output of compilation
@@ -1493,10 +1679,29 @@ gcc -Wall -v main.c -o Result
 
 gcc main.c @Burek
 
+----------------------------
+Library:
+----------------------------
 
+-I //kje išče header fajle
+-L //library path
+-l npr. -lstuff  //name of library
+
+
+-fPIC //position-independent code
+gcc -c -Wall -Werror -fPIC main.c
+gcc -shared -o libmain.so main.o
+
+
+
+main.c
+#include<stdio.h> //išče na standardnih mestih za library
+#include "stuff.h" //išče header v trenutnem folderju + standarna mesta
+
+-----------------
 STATIC Library:
 
-ar rcs libneki.a add.o
+ar rcs libneki.a add.o sub.o
 r-replace, c-create, s-index
 
 
@@ -1505,17 +1710,41 @@ gcc -o out main.o libneki.a
 
 gcc -o out -L . main.o -lneki
 
--I //kje išče header fajle
--L //library path
--l npr. -lstuff  //name of library
-
 gcc main.c -L libs -lstuff -I inc -o out
-main.c
-#include<stdio.h> //išče na standardnih mestih za library
-#include "stuff.h" //išče header v trenutnem folderju + standarna mesta
+
 
 
 SHARED Library
+
+gcc -fPIC -c add.c
+gcc -fPIC -c sub.c
+
+gcc -shared -o libneki.so add.o sub.o
+
+gcc -c main.c
+
+gcc -o output main.o libneki.so (-L . -I include)
+or
+gcc -o output main.o libneki.so (-L . -I include)
+
+./output
+
+
+//not working on mac!!!!!!!!!!!!!
+mv libneki.so /user/lib
+
+sudo ldconfig
+/lib
+/usr/lib
+/usr/local/lib
+
+
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/myFolder
+
+
+/usr/include  - Sem daš header fajle
+
+/usr/local/include - na mac-u obstaja - I gueas here
 
 ------------------------------------------------
 Networking:
