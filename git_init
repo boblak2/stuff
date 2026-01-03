@@ -610,6 +610,20 @@ killall [stikala] ime
 
 trap [ukaz] signal //lovljenje signala
 
+
+
+alias
+alias c=clear
+alias l="ls -l"
+
+alias //all alias list
+alias -p //all alias list - not working on mac
+
+unalias c //remove
+
+type -a c //if alias already exists
+>>c is an alias for clear
+
 -------------------------------------------------------------------------------------------------------------
 Regular expresions:
 -------------------------------------------------------------------------------------------------------------
