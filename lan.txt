@@ -345,7 +345,7 @@ await Task.Factory.StartNew(Stuff1).ContinueWith((t)=>Stuff2());
 
 
 ------------
-Extentions
+Records
 ------------
 
 public record Person(string FirstName, string LastName);
@@ -368,6 +368,31 @@ public record struct Point
     public double Z { get; init; }
 }
 
+------------
+Extentions
+------------
+TODO:
+
+
+
+------------
+gRPC
+------------
+- google Remote Procedure Call framework
+
+ can run in any environment
+
+- connect services
+
+- mostly works like REST APIs
+
+- it has a few standards to follow
+
+- most important standards is Interface definition language (IDL) 
+which is a common language both programs have to use to talk to each other.
+ By default, gRPC uses protocol buffer (a.k.a. protobuf) as IDL.
+
+- gRPC uses HTTP/2 for the RPC calls.
 
 -------------------------------------------
 C ANSI
