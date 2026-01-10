@@ -456,6 +456,8 @@ find ~/Documents -iname index.html
 -name //Case sensetive
 -iname //case insensetive
 
+find . -name "*.sh" -or -iname "*.JPG" //find more then one file with "-or"
+
 MORE/LESS
 more index.html //use space to move
 less index.html
@@ -623,6 +625,13 @@ unalias c //remove
 
 type -a c //if alias already exists
 >>c is an alias for clear
+
+unalias -a //delete all aliases
+
+.zshrc //for permenent alias
+
+
+
 
 -------------------------------------------------------------------------------------------------------------
 Regular expresions:
@@ -1429,6 +1438,19 @@ all.c:
 
 clean:
     rm -f *.c *.o all
+
+--------------------
+Pattern Rules
+
+Pattern rules are often used but quite confusing. You can look at them as two ways:
+
+    A way to define your own implicit rules
+    A simpler form of static pattern rules
+
+
+# Define a pattern rule that compiles every .c file into a .o file
+%.o : %.c
+    $(CC) -c $(CFLAGS) $(CPPFLAGS) $< -o $@
 
 
 --------------------
