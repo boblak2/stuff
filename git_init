@@ -273,6 +273,21 @@ test.py
 *.py
 img/  //for images
 
+----------------------
+Clean
+
+The -f flag forces the removal of untracked files. Directories and ignored files are left alone.
+The -d flag forces removal of untracked git directories.
+The -x flag removes untracked files that map to .gitignore entries.
+
+git clean -fdx
+
+
+git clean -n //samo pove kaj bo odstranil
+Would remove clean-cache.ini
+Would remove clean-untracked.txt
+Would remove clean-stash.html
+
 -----------------------------------------------------------------------------------------------
 GITLAB youtube tutorila
 https://www.youtube.com/watch?v=QCZl0eNzMTs&list=PLLnpHn493BHGgDmJGfCzRYRkFYWcRrxDT&index=2
