@@ -828,3 +828,5 @@ start .
 start %windir%\explorer.exe
 
 start %windir%\explorer.exe "C:\Users\blazo\Desktop"
+
+getmac /v //displays all mac addresses
