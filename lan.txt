@@ -207,6 +207,15 @@ or
 "jniLibs"
 
 
+Uri
+android.resource:///  //for uri in assets
+file:///              //for uri in your local storage
+content://com.android.providers.media.documents/document/image%3A00038484 //for sharing
+data://text/plain;charset=utf-8,hello%20world. //the uri itself holds the data
+
+
+https://www.youtube.com/watch?v=IVHZpTyVOxU
+
 -------------------------------------------
 -------------------------------------------
 dotnet
