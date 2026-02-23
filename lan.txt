@@ -395,6 +395,62 @@ which is a common language both programs have to use to talk to each other.
 
 - gRPC uses HTTP/2 for the RPC calls.
 
+
+------------------------------------
+Dependency Injection - DI
+------------------------------------
+
+public Test(IBurek burek, ILogger log) //DI - thrue constructor
+
+Microsoft.Extentions.Hosting //nuget for DI
+
+-----------------
+IHost host = Host.CreateDefaultBuilder()
+    .ConfigureServices(services =>
+    {
+        services.AddTransient<Work>();
+    })
+    .Build();
+
+IBurek burek = host.Services.GetRequiredService<Work>();
+--------------------
+
+
+services.AddTransient<IBurek, Burek>(); //Vsakič druga instanca
+services.AddSingleton<IBurek, Burek>(); //Vedno ista instanca
+services.AddScoped<IBurek, Burek>(); //Instanca je narejena 1x per scope and the reused in scope.
+
+Scope = container
+
+using var firstScope = host-Services.CreateScope();
+
+
+IServiceScopeFactory sf = ...
+
+usinf var scope = sf.CreateScope();
+scope.Serviceprovider.GetRequiredService<IBurek>();
+
+Recomendation: EntetyFramework should work with Scoped lifetime.
+
+
+.Add() //adds everytime
+.TryAdd() //adds if none exists
+
+
+DI vs ServiceLocator
+
+ServiceLocator:
+burek = Locator.getService<IBurek>();
+
+------------------------------------
+Stratagy patrn
+------------------------------------
+
+Use interfaces
+
+IBurek food = new Mesni();
+IBurek foo2 = new Sirov();
+
 -------------------------------------------
 C ANSI
 -------------------------------------------

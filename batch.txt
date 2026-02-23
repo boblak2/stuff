@@ -174,7 +174,7 @@ echo %DATE%
 
 TIME
 
-&commat;echo off 
+@echo off 
 echo %TIME%
 
 ----------------------------
@@ -830,3 +830,5 @@ start %windir%\explorer.exe
 start %windir%\explorer.exe "C:\Users\blazo\Desktop"
 
 getmac /v //displays all mac addresses
+
+edit //opens text editor
