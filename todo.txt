@@ -16,3 +16,4 @@ awaitable Task
 Partial
 linq // .where(i=> i.Len < 100)
 lambda	
+12

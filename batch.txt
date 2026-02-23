@@ -1,0 +1,832 @@
+Command Line Arguments
+
+@echo off 
+echo %1 
+echo %2 
+echo %3
+
+------------------------------------
+Set Command
+
+set /A variable-name=value
+
+/A This switch is used if the value needs to be numeric in nature.
+
+&commat;echo off 
+SET /A a = 5 
+SET /A b = 10 
+SET /A c = %a% + %b% 
+echo %c% 	
+
+----------------------------
+Local vs Global Variables
+
+@echo off 
+set globalvar = 5
+SETLOCAL
+set var = 13145
+set /A var = %var% + 5
+echo %var%
+echo %globalvar%
+ENDLOCAL
+------------------------
+Working with Environment Variables
+
+@echo off 
+echo %PATH%
+
+----------------------
+Comments Using the Rem Statement
+
+Rem Burek njam
+
+Comments Using the :: Statement
+
+:: Burek njam
+
+-----------------------------------
+Emty string
+@echo off 
+SET a= 
+SET b=Hello 
+if [%a%]==[] echo "String A is empty" 
+if [%b%]==[] echo "String B is empty "
+
+
+String Interpolation
+@echo off 
+SET a = Hello 
+SET b = World 
+SET /A d = 50 
+SET c=%a% and %b% %d%
+echo %c%
+
+String Concatenation
+@echo off 
+SET a = Hello 
+SET b = World 
+SET c=%a% and %b% 
+echo %c%
+--------------------------------------
+
+Arrays
+
+@echo off 
+set list=1 2 3 4 
+(for %%a in (%list%) do ( 
+   echo %%a 
+))
+
+@echo off
+set a[0]=1 
+set a[1]=2 
+set a[2]=3 
+echo The first element of the array is %a[0]% 
+echo The second element of the array is %a[1]% 
+echo The third element of the array is %a[2]%
+
+
+Iterating Over an Array
+@echo off 
+setlocal enabledelayedexpansion 
+set topic[0]=comments 
+set topic[1]=variables 
+set topic[2]=Arrays 
+set topic[3]=Decision making 
+set topic[4]=Time and date 
+set topic[5]=Operators 
+
+for /l %%n in (0,1,5) do ( 
+   echo !topic[%%n]! 
+)
+
+---------------------------
+
+If Statement
+
+if(condition) do_something
+
+@echo off 
+SET /A a = 5 
+SET /A b = 10 
+SET /A c = %a% + %b% 
+if %c%==15 echo "The value of variable c is 15" 
+if %c%==10 echo "The value of variable c is 10"
+
+If/Else Statement
+
+If (condition) (do_something) ELSE (do_something_else)
+
+@echo off 
+SET /A a = 5 
+SET /A b = 10
+SET /A c = %a% + %b% 
+if %c%==15 (echo "The value of variable c is 15") else (echo "Unknown value") 
+if %c%==10 (echo "The value of variable c is 10") else (echo "Unknown value")
+
+
+
+GOTO
+
+goto :label 
+...some commands 
+:label 
+...some other commands
+
+@echo off 
+SET /A a = 5 
+
+if %a%==5 goto :labela 
+if %a%==10 goto :labelb
+
+:labela 
+echo "The value of a is 5" 
+
+exit /b 0
+
+:labelb 
+echo "The value of a is 10"
+
+--------------------------------------------------
+
+Relational Operators
+
+EQU 	Tests the equality between two objects 	2 EQU 2 will give true
+NEQ 	Tests the difference between two objects 	3 NEQ 2 will give true
+LSS 	Checks to see if the left object is less than the right operand 	2 LSS 3 will give true
+LEQ 	Checks to see if the left object is less than or equal to the right operand 	2 LEQ 3 will give true
+GTR 	Checks to see if the left object is greater than the right operand 	3 GTR 2 will give true
+GEQ 	Checks to see if the left object is greater than or equal to the right operand 	3 GEQ 2 will give true
+
+------------------------------------------------------
+Logical Operators
+
+AND 	This is the logical and operator
+OR 	This is the logical or operator
+NOT 	This is the logical not operator
+
+-----------------------------------
+
+DATE
+
+@echo off 
+echo %DATE%
+
+TIME
+
+&commat;echo off 
+echo %TIME%
+
+----------------------------
+Redirecting Output (Stdout and Stderr)
+
+Dir C:\ > list.txt
+
+Suppressing Program Output
+Dir C:\ > NUL
+
+
+-----------------------------------
+Exit codes
+
+0 	Program successfully completed.
+1 	Incorrect function. Indicates that Action has attempted to execute non-recognized command in Windows command prompt cmd.exe.
+2 	The system cannot find the file specified. Indicates that the file cannot be found in specified location.
+3 	The system cannot find the path specified. Indicates that the specified path cannot be found.
+5 	Access is denied. Indicates that user has no access right to specified resource.
+
+9009
+
+0x2331 Program is not recognized as an internal or external command, operable program or batch file. Indicates that command, application name or path has been misspelled when configuring the Action.
+
+221225495
+
+0xC0000017
+
+-1073741801
+	
+
+Not enough virtual memory is available.
+
+It indicates that Windows has run out of memory.
+
+3221225786
+
+0xC000013A
+
+-1073741510
+	The application terminated as a result of a CTRL+C. Indicates that the application has been terminated either by the user's keyboard input CTRL+C or CTRL+Break or closing command prompt window.
+
+3221225794
+
+0xC0000142
+
+-1073741502
+	The application failed to initialize properly. Indicates that the application has been launched on a Desktop to which the current user has no access rights. Another possible cause is that either gdi32.dll or user32.dll has failed to initialize.
+	
+	
+IF %ERRORLEVEL% NEQ 0 ( 
+   DO_Something 
+)
+
+----------------------------------
+Loops
+----------------------------------
+
+While:
+
+Set counters
+:label
+If (expression) (
+   Do_something
+   Increment counter
+   Go back to :label
+)
+
+@echo off
+SET /A "index = 1"
+SET /A "count = 5"
+:while
+if %index% leq %count% (
+   echo The value of index is %index%
+   SET /A "index = index + 1"
+   goto :while
+)
+
+----------------------------------
+for
+FOR %%variable IN list DO do_something
+
+
+Looping through Ranges
+FOR /L %%variable IN (lowerlimit,Increment,Upperlimit) DO do_something
+
+The /L switch is used to denote that the loop is used for iterating through range
+
+
+Looping files
+
+for %%i in (*) do echo %%i //current dir
+
+for /r %%i in (*) do echo %%i //recursive all dir
+
+----------------------------
+
+Classic for Loop Implementation
+
+for(variable declaration;expression;Increment) {
+   statement #1
+   statement #2
+   
+}
+
+The Batch Script language does not have a direct for statement which is similar to the above syntax, 
+but one can still do an implementation of the classic for loop statement using if statements and labels.
+
+Following is the general flow of the classic for loop statement
+
+Set counter
+:label
+
+If (expression) exit loop
+Do_something
+Increment counter
+Go back to :label
+
+@echo off 
+SET /A i = 1 
+:loop 
+
+IF %i%==5 GOTO END 
+echo The value of i is %i% 
+SET /a i=%i%&plus;1 
+GOTO :LOOP 
+:END
+
+-----------------------------------------------------------
+
+Functions
+
+:function_name 
+Do_something 
+EXIT /B 0
+
+:Display 
+SET /A index=2 
+echo The value of index is %index% 
+EXIT /B 0
+
+
+-----
+Calling a Function
+
+call :function_name
+
+-----
+Functions with Parameters
+Call :function_name parameter1, parameter2 parametern
+
+@echo off
+SETLOCAL
+CALL :Display 5 , 10
+EXIT /B %ERRORLEVEL%
+:Display
+echo The value of parameter 1 is %~1
+echo The value of parameter 2 is %~2
+EXIT /B 0
+
+----------------------------
+
+Files
+
+Creating Files
+@echo off
+echo "Hello">C:\new.txt
+
+Reading from Files
+@echo off
+FOR /F "tokens=* delims=" %%x in (new.txt) DO echo %%x
+
+Writing to Files
+@echo off
+dir C:\>C:\new.txt
+
+Appending to Files
+@echo off
+echo "This is the directory listing of C:\ Drive">C:\new.txt
+dir C:\>>C:\new.txt
+
+Files Pipes
+dir C:\ | find "txt" > AllText.txt
+
+tasklist | find "notepad"
+
+Deleting Files
+DEL [/P] [/F] [/S] [/Q] [/A[[:]attributes]] names
+
+1. 	Names Specifies a list of one or more files or directories. Wildcards may be used to delete multiple files. If a directory is specified, all files within the directory will be deleted
+2. 	/P Prompts for confirmation before deleting each file.
+3. 	/F Force deletes of read-only files.
+4. 	/S Deletes specified files from all subdirectories.
+5. 	/Q Quiet mode, do not ask if ok to delete on global wildcard.
+6. 	/A Selects files to delete based on attributes.
+7. 	attributes R Read-only files, S System files, H Hidden files, A Files ready for archiving - Prefix meaning not
+
+
+Renaming Files
+RENAME [drive:][path][directoryname1 | filename1] [directoryname2 | filename2]
+
+rename *.txt *.bak
+
+rename "TESTA.txt" "TESTB.txt"
+
+Moving Files
+MOVE [/Y | /-Y] [drive:][path]filename1[,...] destination
+
+1. 	[drive:][path]filename1 Specifies the location and name of the file or files you want to move
+2. 	destination Specifies the new location of the file. Destination can consist of a drive letter and colon, a directory name, or a combination. If you are moving only one file, you can also include a filename if you want to rename the file when you move it.
+3. 	[drive:][path]dirname1 Specifies the directory you want to rename.
+4. 	dirname2 Specifies the new name of the directory.
+5. 	/Y Suppresses prompting to confirm you want to overwrite an existing destination file.
+6. 	/-Y Causes prompting to confirm you want to overwrite an existing destination file.
+
+
+------------------------------------------
+Folders
+
+Creating Folders
+
+MKDIR [drive:]path 
+MD [drive:]path
+
+mkdir \a\b\c
+
+Listing Folder Contents
+DIR [drive:][path][filename] [/A[[:]attributes]] [/B] [/C] [/D] [/L] [/N] 
+[/O[[:]sortorder]] [/P] [/Q] [/R] [/S] [/T[[:]timefield]] [/W] [/X] [/4]
+
+
+1. 	[drive:][path][filename] Specifies drive, directory, or files to list
+2. 	/A Displays files with specified attributes.
+3. 	attributes D - Directories R - Read-only files H - Hidden files A - Files ready for archiving S - System files I - Not content indexed files L - Reparse Points - Prefix meaning not
+4. 	/B Uses bare format (no heading information or summary).
+5. 	/C Displays the thousand separator in file sizes. This is the default. Use /-C to disable the display of the separator.
+6. 	/D Same as wide but files are list sorted by column.
+7. 	/L Uses lowercase.
+8. 	/N New long list format where filenames are on the far right.
+9. 	/O Lists by files in sorted order.
+10. 	sortorder N By name (alphabetic), S By size (smallest first), E By extension (alphabetic), D By date/time (oldest first), G Group directories first - Prefix to reverse order
+11. 	/P Pauses after each screen is full of information.
+12. 	/Q Displays the owner of the file.
+13. 	/R Displays alternate data streams of the file.
+14. 	/S Displays files in the specified directory and all subdirectories.
+15. 	/T Controls what time field is displayed or used for sorting.
+16. 	timefield C - Creation A - Last Access W - Last Written
+17. 	/W Uses wide list format.
+18. 	/X This displays the short names generated for non-8dot3 file names. The format is that of /N with the short name inserted before the long name. If no short name is present, blanks are displayed in its place.
+19. 	/4 Displays four-digit years.
+
+
+Deleting Folders
+DEL [/P] [/F] [/S] [/Q] [/A[[:]attributes]] names
+
+Del Example1 , Example2
+
+1. 	Names Specifies a list of one or more files or directories. Wildcards may be used to delete multiple files. If a directory is specified, all files within the directory will be deleted
+2. 	/P Prompts for confirmation before deleting each file.
+3. 	/F Force deletes read-only files.
+4. 	/S Deletes specified files from all subdirectories.
+5. 	/Q Quiet mode, do not ask if ok to delete on global wildcard.
+6. 	/A Selects files to delete based on attributes.
+7. 	attributes R - Read-only files, S - System files, H - Hidden files, A - Files ready for archiving - Prefix meaning not
+
+
+Renaming Folders
+REN or RENAME
+RENAME [drive:][path][directoryname1 | filename1] [directoryname2 | filename2]
+
+ren Example Example1
+
+Moving Folders
+MOVE [/Y | /-Y] [drive:][path]filename1[,...] destination
+
+1. 	[drive:][path]filename1 Specifies the location and name of the file or files you want to move
+2. 	destination Specifies the new location of the file. Destination can consist of a drive letter and colon, a directory name, or a combination. If you are moving only one file, you can also include a filename if you want to rename the file when you move it.
+3. 	[drive:][path]dirname1 Specifies the directory you want to rename.
+4. 	dirname2 Specifies the new name of the directory.
+5. 	/Y Suppresses prompting to confirm you want to overwrite an existing destination file.
+6. 	/-Y Causes prompting to confirm you want to overwrite an existing destination file.
+
+move *.* C:\Example
+
+----------------------------------------------------------
+Process
+TASKLIST
+
+TASKLIST [/S system [/U username [/P [password]]]] [/M [module] | /SVC | /V] [/FI filter]
+[/FO format] [/NH]
+
+
+tasklist /fi "memusage gt 40000" //The above command will only fetch those processes whose memory is greater than 40MB. Following is a sample output that can be rendered.
+
+
+--------------------------------------
+Killing a Particular Process
+
+TASKKILL [/S system [/U username [/P [password]]]] { [/FI filter] 
+[/PID processid | /IM imagename] } [/T] [/F]
+
+
+taskkill /f /im notepad.exe
+
+taskill /pid 9214
+
+----------------------------
+Starting a New Process
+
+START "title" [/D path] [options] "command" [parameters]
+
+-------------------------
+Aliases
+
+DOSKEY [options] [macroname=[text]]
+
+- macroname − A short name for the macro.
+
+- text − The commands you want to recall.
+
+Options & Description
+1. 	/REINSTALL Installs a new copy of Doskey
+2. 	/LISTSIZE = size Sets size of command history buffer.
+3. 	/MACROS Displays all Doskey macros.
+4. 	/MACROS:ALL Displays all Doskey macros for all executables which have Doskey macros.
+5. 	/MACROS:exename Displays all Doskey macros for the given executable.
+6. 	/HISTORY Displays all commands stored in memory.
+7. 	/INSERT Specifies that new text you type is inserted in old text.
+8. 	/OVERSTRIKE Specifies that new text overwrites old text.
+9. 	/EXENAME = exename Specifies the executable.
+10. 	/MACROFILE = filename Specifies a file of macros to install.
+11. 	macroname Specifies a name for a macro you create.
+12. 	text Specifies commands you want to record.
+
+
+
+doskey c=cls
+
+Deleting an Alias
+doskey c=  //we set it to null
+
+--------------------------------------------
+Devices
+
+//Not working on Windows 11
+Windows now has an improved library which can be used in Batch Script for 
+working with devices attached to the system. 
+This is known as the device console DevCon.exe
+
+
+Alternative: Using pnputil //On Windows 11
+
+List devices: pnputil /enum-devices
+Disable device: pnputil /disable-device "instance ID"
+Enable device: pnputil /enable-device "instance ID"
+
+--------------------------------------------
+Registry
+
+The Registry contains two basic elements: keys and values.
+
+Registry keys are container objects similar to folders. 
+Registry values are non-container objects similar to files.
+
+Keys are referenced with a syntax similar to Windows' path names, 
+using backslashes to indicate levels of hierarchy.
+
+-----------------------
+Reading from the Registry
+
+REG QUERY [ROOT\]RegKey /v ValueName [/s] 
+REG QUERY [ROOT\]RegKey /ve --This returns the (default) value.
+
+
+@echo off 
+REG QUERY HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Windows\
+
+
+--------------------------
+Adding to the Registry
+
+REG ADD [ROOT\]RegKey /v ValueName [/t DataType] [/S Separator] [/d Data] [/f]
+REG ADD [ROOT\]RegKey /ve [/d Data] [/f]
+
+
+ValueName − The value, under the selected RegKey, to edit.
+
+/d Data − The actual data to store as a "String", integer, etc.
+
+/f − Force an update without prompting "Value exists, overwrite Y/N".
+
+/S Separator − Character to use as the separator in REG_MULTI_SZ values. The default is "\0".
+
+/t DataType − These are the data types defined as per the registry standards which can be −
+
+    REG_SZ (default)
+
+    REG_DWORD
+
+    REG_EXPAND_SZ
+
+    REG_MULTI_SZ
+
+
+@echo off 
+REG ADD HKEY_CURRENT_USER\Console /v Test /d "Test Data" 
+REG QUERY HKEY_CURRENT_USER\Console /v Test
+
+
+---------------------------------
+Deleting from the Registry
+
+REG DELETE [ROOT\]RegKey /v ValueName [/f] 
+   REG DELETE [ROOT\]RegKey /ve [/f] 
+   REG DELETE [ROOT\]RegKey /va [/f]
+
+ValueName − The value, under the selected RegKey, to edit.
+
+/f − Force an update without prompting "Value exists, overwrite Y/N".
+
+@echo off
+REG DELETE HKEY_CURRENT_USER\Console /v Test /f
+REG QUERY HKEY_CURRENT_USER\Console /v Test
+
+---------------------------------------
+Copying Registry Keys
+
+REG COPY [\\SourceMachine\][ROOT\]RegKey [\\DestMachine\][ROOT\]RegKey
+
+
+@echo off 
+REG COPY HKEY_CURRENT_USER\Console HKEY_CURRENT_USER\Console\Test 
+REG QUERY HKEY_CURRENT_USER\Console\Test
+
+--------------------------------
+Comparing Registry Keys
+
+REG COMPARE [ROOT\]RegKey [ROOT\]RegKey [/v ValueName] [Output] [/s]
+REG COMPARE [ROOT\]RegKey [ROOT\]RegKey [/ve] [Output] [/s]
+
+
+Wherein Output − /od (only differences) /os (only matches) /oa (all) /on (no output).
+
+@echo off
+REG COMPARE HKEY_CURRENT_USER\Console HKEY_CURRENT_USER\Console\Test
+-------------------------------------
+
+Network
+
+NET ACCOUNTS
+
+NET ACCOUNT [/FORCELOGOFF:{minutes | NO}] [/MINPWLEN:length]
+[/MAXPWAGE:{days | UNLIMITED}] [/MINPWAGE:days] 
+[/UNIQUEPW:number] [/DOMAIN]
+
+
+
+FORCELOGOFF − Force the log-off of the current user within a defined time period.
+
+MINPWLEN − This is the minimum password length setting to provide for the user.
+
+MAXPWAGE − This is the maximum password age setting to provide for the user.
+
+MINPWAGE − This is the minimum password age setting to provide for the user.
+
+-----------
+NET CONFIG
+
+NET COMPUTER
+
+NET USER
+Net user [username [password | *] [options]] [/DOMAIN] 
+username {password | *} /ADD [options] [/DOMAIN] 
+username [/DELETE] [/DOMAIN]
+
+
+net user Guest
+
+-------------------------
+NET STOP/START
+
+This command is used to stop and start a particular service.
+
+Net stop/start [servicename]
+
+-----------------------
+NET STATISTICS
+
+Display network statistics of the workstation or server.
+
+Net statistics [SERVER/WORKSTATION]
+
+Net statistics Server
+Net statistics WORKSTATION
+
+-------------------------
+NET USE
+
+Connects or disconnects your computer from a shared resource or displays information about your connections.
+
+NET USE [devicename | *] [\\computername\sharename[\volume] [password | *]] 
+[/USER:[domainname\]username] 
+[/USER:[dotted domain name\]username]
+[/USER:[username&commat;dotted domain name] 
+[/SMARTCARD] 
+[/SAVECRED] [[/DELETE] | [/PERSISTENT:{YES | NO}]]
+
+
+\\computername\sharename − This is the name of the share which needs to be connected to.
+/USER − This needs to be specified to ensure that the right credentials are specified when connecting to the network share.
+
+---------------------------------
+Debugging
+
+Using echo command 
+
+Using pause command
+@echo off 
+echo 1
+echo 2
+echo 3
+pause
+echo 4
+
+output:
+1
+2
+3
+Press any key to continue . . .
+4
+
+
+---------
+Using ErrorLevel to detect errors and log them
+@echo off 
+PING google.com  
+if errorlevel 1 GOTO stop  
+:stop 
+   echo Unable to connect to google.com 
+pause
+
+
+Logging
+test.bat > testlog.txt 2> testerrors.txt
+-------------------------------------------
+ver //version of MS-DOS you are using
+
+assoc  //displays existing associations, or deletes an association
+assoc | find ".ext"
+
+copy src dst
+
+exit //This batch command exits the DOS console.
+
+md == mkdir //creates a new directory in the current location
+
+move src dst
+
+path //This batch command displays or sets the path variable
+
+pause //This batch command prompts the user and waits for a line of input to be entered.
+
+PROMPT // This batch command can be used to change or reset the cmd.exe prompt.
+PROMPT [newpromptname]
+prompt myprompt$G  //now you will see: myprompt>echo lol
+
+rd == rmdir //removes directories, but the directories need to be empty before they can be removed
+
+ren //Renames files and directories
+
+start //starts a program in new window, or opens a document
+
+time //sets or displays the time
+
+type //content of a file or files to the output
+------
+ATTRIB //Displays or sets the attributes of the files in the current directory
+Rem Displays the attribites of the file in the current directory
+Attrib
+
+Rem Displays the attributes of the file lists.txt
+attrib C:\tp\lists.txt
+
+Rem Adds the "Read-only" attribute to the file.
+attrib &plus;r C:\tp\lists.txt
+Attrib C:\tp\lists.txt
+
+Rem Removes the "Archived" attribute from the file
+attrib -a C:\tp\lists.txt
+Attrib C:\tp\lists.txt
+-------
+
+CHKDSK //checks the disk for any problems
+
+cmd // invokes another instance of command prompt
+start cmd // opens in new window
+
+comp //compares 2 files based on the file size
+
+convert //converts a volume from FAT16 or FAT32 file system to NTFS file system
+
+driverquery //shows all installed device drivers and their properties
+
+expand //extracts files from compressed .cab cabinet files
+
+format //formats a disk to use Windows-supported file system such as FAT, FAT32 or NTFS, thereby overwriting the previous content of the disk
+
+
+help 
+
+ipconfig
+
+label //adds, sets or removes a disk label
+
+more //displays the contents of a file or files, one screen at a time
+
+net 
+
+ping
+
+SHUTDOWN //shuts down a computer, or logs off the current user
+
+sort 
+
+systeminfo //shows configuration of a computer and its operating system
+
+taskkill 
+
+tasklist
+
+copy
+
+xcopy //copies files and directories in a more advanced way
+
+tree //displays a tree of all subdirectories of the current directory to any level of recursion or depth
+
+fc //lists the actual differences between two files
+
+Diskpart //shows and configures the properties of disk partitions
+
+set //Displays the list of environment variables on the current system
+
+find ".txt"
+
+------------------------------
+todo:
+How do I open an Explorer window in a given directory from cmd.exe?
+start .
+
+
+start %windir%\explorer.exe
+
+start %windir%\explorer.exe "C:\Users\blazo\Desktop"
+
+getmac /v //displays all mac addresses
