@@ -1817,6 +1817,30 @@ If one device needs to address othe device first it sends broadst.
 That is why we use routers to make subnets. And we create subnets using the mask.
 
 
+Access Point / povezan z žico, da wifi signal
+Repeater // podoben kot access point, ampak počasnejši ker je povezan na router preko wifi in ne preko žice.
+Range extender // podoben kot access point, ampak počasnejši ker je povezan na router preko wifi in ne preko žice.
+
+
+
+------------------------------------------------
+Monitors
+------------------------------------------------
+crt - katodni
+lcd (tn, ipsva)
+oled
+
+1280 x 720 (HD)
+1920 x 1080 (FHD - Full HD)
+2560 x 1440 (QHD - Quad HD) - 2k resoltution
+3840 x 2160 (UHD - Ultra HD) 4k resolution
+
+aspect ratio - ratio between width and height
+4:3 //old school
+16:9 //widescreen
+21:9 //ultra widescreen
+32:9 //super widescreen
+
 ------------------------------------------------------------------------------------------------------------
 ------------------------------------ V I M --------------------------------------------------------------
 ------------------------------------------------------------------------------------------------------------

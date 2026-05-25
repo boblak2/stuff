@@ -19,10 +19,12 @@ ffmpeg [GLOBAL OPTIONS] {[input_options] -i input_url} ... {[output_options] out
 -dn //skip data
 -sn //skip subtitle
 -stream_loop X //0- no loop, -1 - infinite loop
+-f //filer (-vf video filter npr. -filter:v) //ffmpeg -i input.mp4 -vf "filter_name=parameter1=value1:parameter2=value2" output.mp4
 
 -i //input
 -y //overide output files
 -n //do not
+
 
 
 -----------
