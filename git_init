@@ -584,7 +584,12 @@ sed '/pattern/d' filename.txt
 sed '/abc/d' filename.txt
 
 
+DATE:
+date +%s%3N  //get epoch
+1774452585900
 
+date -d @1774452585.900
+Wed Mar 25 16:29:45 CET 2026
 
 PROCESI
 ppid //parent process id
@@ -1905,9 +1910,9 @@ git push -u origin --tags
 rename branch
 ------
 
-git -m new_name //if you are on old branch
+git branch -m new_name //if you are on old branch
 
-git -m old_name new_name //globaly
+git branch -m old_name new_name //globaly
 
 
 
