@@ -381,8 +381,14 @@ public record struct Point
 ------------
 Extentions
 ------------
-TODO:
+public static Test{
+    public static void MyMethod(this string orig, string word){
+        Console.WriteLine(orig + " "+ word);
+    }
+}
 
+string s = "bob";
+s.MyMethod("lol"); //bob lol
 
 
 ------------
@@ -436,7 +442,7 @@ using var firstScope = host-Services.CreateScope();
 
 IServiceScopeFactory sf = ...
 
-usinf var scope = sf.CreateScope();
+using var scope = sf.CreateScope();
 scope.Serviceprovider.GetRequiredService<IBurek>();
 
 Recomendation: EntetyFramework should work with Scoped lifetime.
