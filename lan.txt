@@ -234,6 +234,10 @@ dotnet add reference ../PrimeService/PrimeService.csproj
 
 dotnet sln add ./PrimeService.Tests/PrimeService.Tests.csproj
 
+dotnet add package Google.Protobuf  //add nuget
+
+dotnet new console -o GrpcClient //creates console application
+
 
 -------------------------------------------
 C#
