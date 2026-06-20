@@ -461,6 +461,33 @@ DI vs ServiceLocator
 ServiceLocator:
 burek = Locator.getService<IBurek>();
 
+
+------------------------------------
+Logging
+------------------------------------
+
+Microsoft.Extensions.Logging
+
+DI:
+services.AddLogging();
+
+
+public MyClass(ILogger<MyClass> logger){
+	logger.LogError();
+}
+
+
+BuildIn logging providers:
+Console
+Debug
+EventSource
+EventLog
+
+Main objects for logs:
+ILogger<T>
+ILoggerprovider
+ILoggerFactory
+
 ------------------------------------
 Stratagy patrn
 ------------------------------------

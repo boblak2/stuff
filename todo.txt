@@ -20,3 +20,6 @@ lambda
 plugins
 dependency injection
 logger settings - logsettings.json
+----------
+List binding
+DI with wpf
