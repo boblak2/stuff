@@ -1826,6 +1826,24 @@ Access Point / povezan z žico, da wifi signal
 Repeater // podoben kot access point, ampak počasnejši ker je povezan na router preko wifi in ne preko žice.
 Range extender // podoben kot access point, ampak počasnejši ker je povezan na router preko wifi in ne preko žice.
 
+Switch
+- Layer 2 switch
+- layer 3 switch // simular lie routher
+
+VLAN:
+Trunk - vlan trunk allows multiple VLANs to communicate through 
+a single physical cable between the switches.
+
+VLAN - operates on layer 2, they are not routable.
+VXLAN - Virtual Extensible LAN
+
+
+WLAN - Wireless LAN
+VLAN - Virtual LAN (devices are logically grouped not physical)
+
+
+Bandwidth - is bits per second (bps) - how much data is transfered in 1s.
+
 
 
 ------------------------------------------------

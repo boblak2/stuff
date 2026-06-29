@@ -424,11 +424,28 @@ IHost host = Host.CreateDefaultBuilder()
     .ConfigureServices(services =>
     {
         services.AddTransient<Work>();
+        services.AddTransient<IBurek, Burek>();
     })
     .Build();
 
-IBurek burek = host.Services.GetRequiredService<Work>();
+IWork work = host.Services.GetRequiredService<Work>();
+
+IBurek burek = host.Services.GetRequiredService<IBurek>();
+
 --------------------
+When you register a service with services.AddSingleton<IBurek, Burek>(), you tell the Dependency Injection (DI) container: 
+"If anyone asks for IBurek, give them the Burek implementation.
+"The DI container only indexes the service by the first type argument (IBurek). 
+It does not know how to find it if you ask for the concrete type (Burek) directly.
+
+
+-----------------------
+
+//Wrong way
+// WARNING: This creates TWO separate singleton instances!
+services.AddSingleton<IBurek, Burek>();
+services.AddSingleton<Burek>(); 
+
 
 
 services.AddTransient<IBurek, Burek>(); //Vsakič druga instanca
@@ -437,7 +454,7 @@ services.AddScoped<IBurek, Burek>(); //Instanca je narejena 1x per scope and the
 
 Scope = container
 
-using var firstScope = host-Services.CreateScope();
+using var firstScope = host.Services.CreateScope();
 
 
 IServiceScopeFactory sf = ...
