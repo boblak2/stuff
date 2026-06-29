@@ -743,6 +743,48 @@ ruleName - rule identifier to allow rule lookup with Configuration.FindRuleByNam
 finalMinLevel - Loggers matching will be restricted to specified minimum level for following rules. Introduced in NLog 5.0
 
 
+
+Logger Name Filter:
+* - matches 0 or more characters
+? - matches exactly 1 character
+
+
+NLog.LogManager.GetCurrentClassLogger()
+NameSpace.ClassName
+
+<logger name="Name.Space.*" writeTo="target1" />
+
+----------
+Variables:
+<variable name="varname" value="xxx" />
+
+<nlog>
+  <variable name="logDirectory" value="logs/${shortdate}"/>
+  <targets>
+    <target name="file1" xsi:type="File" fileName="${logDirectory}/file1.txt"/>
+    <target name="file2" xsi:type="File" fileName="${logDirectory}/file2.txt"/>
+  </targets>
+</nlog>
+
+
+----------
+Layouts and layout renderers:
+
+The default Layout for NLog Target is this:
+
+${longdate}|${level:uppercase=true}|${logger}|${message:withexception=true}
+
+
+-------
+Asynchronous processing and wrapper targets:
+
+Remember to Flush is very important, when using asynchronous background writing. 
+It ensures all logging is written before application exit.
+
+-------
+Default wrappers
+
+
 https://github.com/nlog/NLog
 https://github.com/NLog/NLog/wiki/Tutorial
 https://github.com/NLog/NLog/wiki/Configuration-file#rules
