@@ -424,6 +424,8 @@ public Test(IBurek burek, ILogger log) //DI - thrue constructor
 Microsoft.Extentions.Hosting //nuget for DI
 
 -----------------
+Example1:
+
 IHost host = Host.CreateDefaultBuilder()
     .ConfigureServices(services =>
     {
@@ -433,7 +435,57 @@ IHost host = Host.CreateDefaultBuilder()
 
 IBurek burek = host.Services.GetRequiredService<Work>();
 --------------------
+Example2:
 
+ServiceCollection sc = new ServiceCollection();
+sc.AddTransient<MainWindow>();
+sc.AddTransient<MainWindowViewModel>();
+sc.AddTransient<IBurek, Burek>();
+sc.AddSingleton<Person>();
+
+IServiceProvider _serviceProvider = sc.BuildServiceProvider();
+
+MainWindow p1 = _serviceProvider.GetRequiredService<MainWindow>();
+p1.Show();
+
+--------------------
+Example3 //Can not add appsettings.json
+
+IHostBuilder builder = Host.CreateDefaultBuilder();
+
+builder.ConfigureServices(services =>
+{
+    services.AddLogging();
+    services.AddTransient<MainWindow>();
+    services.AddTransient<MainWindowViewModel>();
+    services.AddTransient<IBurek, Burek>();
+    services.AddSingleton<Person>();
+
+});
+
+IHost host = builder.Build();
+host.Run();
+
+--------------------
+Example4 //If you want to add appsettings.json, ...
+
+HostApplicationBuilder builder = Host.CreateApplicationBuilder();
+builder.Services.AddLogging();
+builder.Services.AddTransient<MainWindow>();
+builder.Services.AddTransient<MainWindowViewModel>();
+
+builder.Configuration.AddJsonFile("conf/appsettings.json", optional:false, reloadOnChange:true);
+builder.Configuration.AddJsonFile("conf/bullsettings.json", optional:false, reloadOnChange:true);
+
+
+_host = builder.Build();
+Task.Run(() => { _host.Run(); });
+
+MainWindow p1 = _host.Services.GetRequiredService<MainWindow>();  //null if not registered
+//MainWindow p1 = _host.Services.GetService<MainWindow>();        //Exception if not registered
+p1.Show();
+
+--------------------
 
 services.AddTransient<IBurek, Burek>(); //Vsakič druga instanca
 services.AddSingleton<IBurek, Burek>(); //Vedno ista instanca
@@ -441,7 +493,7 @@ services.AddScoped<IBurek, Burek>(); //Instanca je narejena 1x per scope and the
 
 Scope = container
 
-using var firstScope = host-Services.CreateScope();
+using var firstScope = host.Services.CreateScope();
 
 
 IServiceScopeFactory sf = ...
@@ -460,6 +512,81 @@ DI vs ServiceLocator
 
 ServiceLocator:
 burek = Locator.getService<IBurek>();
+
+
+------------------------------------
+IConfiguration
+------------------------------------
+appsettings.json
+
+{
+  "Setup": {
+    "ip": "192.168.1.10",
+    "port": 123456,
+    "arr": [
+      11,
+      222,
+      33
+    ]
+  }
+}
+----------------
+bullsettings.json
+{
+  "data": 420,
+  "name": "loool"
+}
+
+----------------
+public class ConfOptions
+{
+    public int Data {  get; set; }
+    public string Name {  get; set; }
+}
+
+//Add configuration files
+builder.Configuration.AddJsonFile("conf/appsettings.json", optional:false, reloadOnChange:true);
+builder.Configuration.AddJsonFile("conf/bullsettings.json", optional:false, reloadOnChange:true);
+
+//4 Binding
+builder.Services.AddOptions<ConfOptions>().Bind(builder.Configuration);
+//builder.Services.AddOptions<ConfOptions>().Bind(builder.Configuration.GetSection("SomeOptions"));
+
+public MainWindowViewModel(IConfiguration configuration, ILogger<MainWindowViewModel> logger, ...)
+{
+	string? ip = configuration.GetValue<string>("Setup:ip");
+	int? port = configuration.GetValue<int>("Setup:port");
+
+	var arry = configuration.GetValue<List<int>>("Setup:arr");
+	var sd = configuration.GetValue<int>("Setup:arr:1");
+	var val = configuration.GetSection("Setup:arr").Get<List<int>>();
+
+	var fin = configuration.GetValue<int>("data");
+	
+	
+	//With Get
+	ConfOptions? co = configuration.Get<ConfOptions>();
+	//ConfOptions? co2 = configuration.GetSection("SomeSettings").Get<ConfOptions>();
+
+	//With Bind
+	ConfOptions co3 = new();
+	configuration.Bind(co3);
+	//configuration.GetSection("SomeSettings").Bind(co3);
+
+	
+	//Before DI you need:
+	builder.Services.AddOptions<ConfOptions>().Bind(builder.Configuration);
+	//builder.Services.AddOptions<ConfOptions>().Bind(builder.Configuration.GetSection("SomeOptions"));
+	
+
+	//With Di
+	ConfOptions coDI = confOp.Value;
+
+	//With DI snapshoot - reloada during runtime
+	ConfOptions coSnap = confOpSnap.Value;
+}
+
+
 
 
 ------------------------------------
@@ -487,6 +614,173 @@ Main objects for logs:
 ILogger<T>
 ILoggerprovider
 ILoggerFactory
+
+-------------------
+NLog
+-------------------
+NLog.Extensions.Logging //package
+
+file: NLog.config
+
+------------------------
+<?xml version="1.0" encoding="utf-8" ?>
+<nlog xmlns="http://www.nlog-project.org/schemas/NLog.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://www.nlog-project.org/schemas/NLog.xsd NLog.xsd">
+
+	<variable name="logDirectory" value="logsss/${shortdate}"/>
+
+	<targets>
+		<target name="logfile" xsi:type="File" fileName="${logDirectory}/logfile3.txt" />
+		<target name="logconsole" xsi:type="Console" />
+	</targets>
+
+	<rules>
+		<logger name="*" minlevel="Info" writeTo="logconsole" />
+		<logger name="*" minlevel="Debug" writeTo="logfile" />
+	</rules>
+</nlog>
+------------------------
+1) Targets
+2) Rules
+-----------------
+1) DI:
+-----
+Service registration
+...
+builder.Logging.ClearProviders();
+builder.Services.AddNLog();
+LogManager.Setup().LoadConfigurationFromFile("conf/NLog.config");
+
+
+Class
+public MainWindowViewModel(ILogger<MainWindowViewModel> logger, ...){
+
+	_logger?.LogInformation("adding stuff");
+	_logger?.LogTrace("Saving to db :)");
+	_logger?.LogDebug("Saving to db :)");
+	_logger?.LogInformation("Saving to db :)");
+	_logger?.LogError("Saving to db :)");
+	_logger?.LogCritical("Saving to db :)");
+}
+
+----------
+2) No DI:
+---------
+
+private static readonly NLog.Logger Logger = NLog.LogManager.GetCurrentClassLogger();
+
+
+--------------------
+//When app closes:
+
+NLog.LogManager.Shutdown(); // Flush and close down internal threads and timers
+
+
+---------------------
+1) Targets:
+There are two attributes required for each target:
+
+name – target name
+type – target type – such as "File", "Database", "Mail". When using namespaces this attribute is named xsi:type.
+
+
+Example:
+<targets>
+  <target name="f1" xsi:type="File" fileName="file1.txt"/>
+  <target name="f2" xsi:type="File" fileName="file2.txt"/>  
+  <target name="n1" xsi:type="Network" address="tcp://localhost:4001"/>
+  <target name="ds" xsi:type="OutputDebugString"/>
+</targets>
+
+-----
+Loglevel:
+
+LogLevel 	Ordinal 	Severity 	Typical Use
+Trace 	0 	Most verbose level. Used for development and seldom enabled in production. 	Ex. Request-payload, Response-payload, Begin-method-X or End-method-X
+Debug 	1 	Debugging the application behavior from internal events of interest. 	Ex. Executed query, User authenticated, Session expired
+Info 	2 	Information about application lifetime events like starting/stopping and configuration changes. 	
+Warn 	3 	Warnings about validation issues or temporary failures that can be recovered. 	
+Error 	4 	Errors where functionality has failed or Exception have been caught. 	
+Fatal 	5 	Most critical level. Application is about to abort. 	
+Off 	6 	Artificial level for disabling logger output
+
+
+!!!! if the minimum level is Info, then Info, Warn, Error and Fatal are logged, but Debug and Trace are ignored.
+
+------------------------
+2) Rules
+
+The rules section controls how LogEvents from the Logger-objects are redirected to output targets. 
+Where logger-name and log levels can be used for filtering.
+
+name – Match logger-name of the Logger-object - may include wildcard characters (* and ?)
+minlevel – minimum level to log (matches the specified level and levels above)
+maxlevel – maximum level to log (matches the specified level and levels below)
+level – single level to log.
+levels - comma separated list of levels to log
+writeTo – comma separated list of targets to write to
+final – no rules are processed after a final rule matches
+enabled - set to false to discard the logging rule completely, and reload is required to re-enable. Please note only literal true or false values can be used here; variables cannot be used to set this property.
+ruleName - rule identifier to allow rule lookup with Configuration.FindRuleByName and Configuration.RemoveRuleByName. Introduced in NLog 4.6.4
+finalMinLevel - Loggers matching will be restricted to specified minimum level for following rules. Introduced in NLog 5.0
+
+
+https://github.com/nlog/NLog
+https://github.com/NLog/NLog/wiki/Tutorial
+https://github.com/NLog/NLog/wiki/Configuration-file#rules
+
+------------------------------------
+Entety framwork
+------------------------------------
+
+Microsoft.EntityFrameworkCore.Sqlite //4sqlite
+
+
+Model:
+public class MyStorageItem
+{
+    [Key]
+    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+    public int Id { get; set; }
+    public string? Name { get; set; }
+    public int Age { get; set; }
+}
+
+public class MyContext : DbContext
+{
+	public DbSet<MyStorageItem> MyItems { get; set; }
+	
+	public string DbPath { get; }
+	
+	public MyContext()
+	{
+		DbPath = "burek.db";
+	}
+
+	protected override void OnConfiguring(DbContextOptionsBuilder options)
+	{
+		options.UseSqlite($"Data Source={DbPath}");
+		
+	}
+}
+
+MyContext ctx = new MyContext();
+
+//Add
+_ctx?.MyItems.Add(model);
+_ctx?.SaveChanges();
+
+//Read
+List<MyStorageItem>? res = _ctx?.MyItems.ToList();
+
+//Remove
+_ctx?.Remove(model);
+_ctx?.SaveChanges();
+
+//Update
+var el = _ctx?.MyItems.FirstOrDefault();
+el.Name = "new name"
+_ctx?.SaveChanges();
 
 ------------------------------------
 Stratagy patrn
