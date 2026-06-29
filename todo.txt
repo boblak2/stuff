@@ -16,4 +16,10 @@ awaitable Task
 Partial
 linq // .where(i=> i.Len < 100)
 lambda	
-12
+----------
+plugins
+dependency injection
+logger settings - logsettings.json
+----------
+List binding
+DI with wpf
