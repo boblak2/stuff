@@ -782,7 +782,79 @@ Remember to Flush is very important, when using asynchronous background writing.
 It ensures all logging is written before application exit.
 
 -------
-Default wrappers
+Default wrappers:
+ALL targets to be wrapped in the same way, for example to add buffering and/or retrying. 
+NLog provides <default-wrapper /> syntax for that. 
+
+
+----------
+Default target parameters
+
+<nlog>
+  <targets>
+    <target name="f1" xsi:type="File" fileName="f1.txt" keepFileOpen="false"/>
+    <target name="f2" xsi:type="File" fileName="f2.txt" keepFileOpen="false"/>
+    <target name="f3" xsi:type="File" fileName="f3.txt" keepFileOpen="false"/>
+   </targets>
+</nlog>
+
+better way:
+<nlog>
+  <targets>
+    <default-target-parameters xsi:type="File" keepFileOpen="false"/>
+    <target name="f1" xsi:type="File" fileName="f1.txt"/>
+    <target name="f2" xsi:type="File" fileName="f2.txt"/>
+    <target name="f3" xsi:type="File" fileName="f3.txt"/>
+  </targets>
+</nlog>
+
+-------------
+Extensions:
+Extensions can be configured to include additional NLog packages or custom ones:
+
+Just reference the DLL in the config in the <extensions /> as shown below. The name should not include the .dll
+
+<nlog> 
+  <extensions> 
+    <add assembly="MyAssembly"/> 
+  </extensions> 
+  <targets> 
+    <target name="a1" type="MyTarget" host="localhost"/> 
+  </targets> 
+  <rules> 
+    <logger name="*" minlevel="Info" appendTo="a1"/> 
+  </rules> 
+</nlog>
+
+---------------
+Automatic reconfiguration:
+Increase the log level without stopping the application. NLog can monitor logging configuration 
+files and re-read them each time they are modified. 
+
+
+so each time one of the included files is changed, the entire configuration gets reloaded.
+
+<nlog autoReload="true">
+   ...
+</nlog>
+
+--------
+Include files:
+<include file="nlog-common.config" />
+
+-------------
+Troubleshooting logging:
+
+Log provides several settings that can help diagnose logging issues:
+
+<nlog internalLogLevel="Trace|Debug|Info|Warn|Error|Fatal" /> — Enables NLog InternalLogger output. Internal logging is often the most useful diagnostic tool when troubleshooting configuration loading, log routing, and target-writing issues.
+
+<nlog throwConfigExceptions="true" /> — Causes configuration-loading errors to be surfaced as exceptions instead of being silently ignored. This setting is recommended during troubleshooting and is often appropriate in production environments where successful loading of the logging configuration is required.
+
+<nlog throwExceptions="true" /> — Causes runtime logging exceptions to be propagated to the calling application instead of being handled internally. This setting is intended only for troubleshooting and unit testing. Do not enable it in production environments because logging failures may cause application errors or crashes.
+
+
+
 
 
 https://github.com/nlog/NLog
