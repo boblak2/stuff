@@ -258,8 +258,28 @@ numbers.Add(a ??= 0);
 
 ---------------
 LINQ
+-------
+Count:
 
 var numCount = numbers.Count(n => n is > 3 and < 7);
+
+---------
+Group By
+List<int> numbers = [35, 44, 200, 84, 3987, 4, 199, 329, 446, 208];
+
+IEnumerable<IGrouping<int, int>> query = numbers
+    .GroupBy(number => number % 2);
+
+foreach (var group in query)
+{
+    Console.WriteLine(group.Key == 0 ? "\nEven numbers:" : "\nOdd numbers:");
+    foreach (int i in group)
+    {
+        Console.WriteLine(i);
+    }
+}
+
+
 
 ---------------
 Tasks:
@@ -781,6 +801,12 @@ Asynchronous processing and wrapper targets:
 Remember to Flush is very important, when using asynchronous background writing. 
 It ensures all logging is written before application exit.
 
+<nlog>
+  <targets async="true">
+    <!-- all targets in this section will automatically be asynchronous -->
+  </targets>
+</nlog>
+
 -------
 Default wrappers:
 ALL targets to be wrapped in the same way, for example to add buffering and/or retrying. 
@@ -853,6 +879,16 @@ Log provides several settings that can help diagnose logging issues:
 
 <nlog throwExceptions="true" /> — Causes runtime logging exceptions to be propagated to the calling application instead of being handled internally. This setting is intended only for troubleshooting and unit testing. Do not enable it in production environments because logging failures may cause application errors or crashes.
 
+---------------------------
+WPF - wpf does not have a console so:
+
+<targets>
+	<target name="lojze" xsi:type="Debugger" layout="${longdate}|${level:uppercase=true}|${message}" />
+</targets>
+
+<rules>
+	<logger name="*" minlevel="Info" writeTo="lojze" />
+</rules>
 
 
 
@@ -922,6 +958,201 @@ Use interfaces
 
 IBurek food = new Mesni();
 IBurek foo2 = new Sirov();
+
+
+------------------------------------
+Unit Tests 
+------------------------------------
+
+XUnit
+
+public class NetworkStuffTests
+{
+
+    private readonly NetworkStuff _networkStuff;
+
+    public NetworkStuffTests()
+    {
+        //SUT
+        _networkStuff = new NetworkStuff();
+    }
+
+
+    [Fact]
+    public void NetworkStuff_SendPing_ReturnTrue()
+    {
+        bool result = _networkStuff.SendPing();
+        Assert.True(result);
+        Assert.Equal(true, result);
+    }
+
+    [Theory]
+    [InlineData(1, 1, 2)]
+    [InlineData(2, 2, 4)]
+    public void NetworkStuff_PingTimeout_ReturnSum(int a, int b, int expected)
+    {
+        
+        int result = _networkStuff.PingTimeout(a, b);
+        Assert.Equal(expected, result);
+    }
+
+    [Fact]
+    public void NetworkStuff_LastPingDate_Neki()
+    {
+        DateTime result = _networkStuff.LastPingDate();
+        DateTime expected = result;//DateTime.Now;
+        Assert.Equal(expected, result);
+    }
+}
+
+
+
+-------------------------------------------
+WPF
+-------------------------------------------
+
+<Grid>
+    <Grid.RowDefinitions>
+        <RowDefinition Height="auto"/>  //wrap_content
+        <RowDefinition Height="*"/>     //match_parent
+    </Grid.RowDefinitions>
+    <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="*"/>
+        <ColumnDefinition Width="*"/>
+    </Grid.ColumnDefinitions>
+    
+    
+    <Label Content="Hi" Background="Red" VerticalAlignment="Top"
+           HorizontalContentAlignment="Center"/>
+</Grid>
+
+
+-------------
+DataContext:
+public partial class MainWindow : Window
+{
+    public MainWindow()
+    {
+        InitializeComponent();
+        DataContext = new MainWindowViewModel();
+    }
+}
+
+or by xaml:
+
+//DataContext = new MainWindowViewModel();  //This you do not need.
+
+<Window.DataContext>
+    <local:MainWindowViewModel />
+</Window.DataContext>
+
+or
+
+<Window x:Class="WpfAppBrisi.MainWindow"
+        ...
+        xmlns:local="clr-namespace:WpfAppBrisi"
+        xmlns:vm="clr-namespace:WpfAppBrisi.ViewModels">
+		
+
+<Window.DataContext>
+    <vm:MainWindowViewModel />
+</Window.DataContext>
+
+----------------------------------------
+Binding Button:
+
+public class MyCommand : ICommand
+{
+    public event EventHandler? CanExecuteChanged;
+
+    public Action<object>? _command;
+
+    public MyCommand(Action<object>? command)
+    {
+        _command = command;
+    }
+
+
+    public bool CanExecute(object? parameter)
+    {
+         return true;
+    }
+
+    public void Execute(object? parameter)
+    {
+        _command?.Invoke(parameter);
+    }
+}
+
+--------
+In ViewModel:
+
+public ICommand SaveCommand { get; }
+
+SaveCommand = new MyCommand(o =>
+{
+    MessageBox.Show("Test :)");
+});
+
+In Xaml:
+<Button Grid.Column="1" Content="Save" Command="{Binding SaveCommand}" />
+
+
+----------------------------------------
+BaseViewModel:
+
+public void SetProperty<T>(ref T storage, T value, string name)
+{
+    storage = value;
+    var args = new PropertyChangedEventArgs(name);
+    PropertyChanged?.Invoke(this, args);
+}
+			 
+
+MainWindowViewModel: BaseViewModel
+{
+
+
+	//For Binding
+	private string _info;
+	public string Info
+	{
+		get => _info;
+		set => SetProperty(ref _info, value, nameof(Info));
+	}
+}
+---------------------
+
+Style:
+
+App.xaml
+<Style x:Key="Mylabel" TargetType="Label">
+    <Setter Property="Background" Value="BlueViolet"/>
+</Style>
+
+<Label Grid.Row="0" Grid.Column="0" Content="{Binding Info}"
+   VerticalAlignment="Top" Style="{StaticResource Mylabel}"
+   
+
+-------------------
+ListView:
+
+<ListView Grid.Row="1" ItemsSource="{Binding Items}"
+          SelectedItem="{Binding SelectedItem}" Background="Gray">
+    <ListView.ItemTemplate>
+        <DataTemplate>
+            <StackPanel Orientation="Horizontal">
+                <Label Content="{Binding Name}"/>
+                <Label Content="{Binding Age}"/>
+            </StackPanel>
+        </DataTemplate>
+    </ListView.ItemTemplate>
+</ListView>
+
+
+public Car SelectedItem {  get; set; }
+
+public ObservableCollection<Car> Items { get; set; }
 
 -------------------------------------------
 C ANSI
