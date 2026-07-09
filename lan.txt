@@ -933,6 +933,7 @@ public class MyContext : DbContext
 }
 
 MyContext ctx = new MyContext();
+ctx.Database.EnsureCreated();   ////////////// Warning: without this it will not work
 
 //Add
 _ctx?.MyItems.Add(model);
