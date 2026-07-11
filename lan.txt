@@ -245,7 +245,7 @@ C#
 
 https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/operators/conditional-operator
 
-private async Task GetData(){ //Task == void
+private async Task GetData(){ //Task == void, Task will be return automaticly by compiler
 	
 }
 
@@ -364,6 +364,63 @@ public async Task<string> GetStuff(){
 
 string d = await GetStuff();
 
+----
+try{
+	
+	string d = await GetData();
+	
+}catch(Exception e){
+	Mylabel.Text = e.Message; //await will couse to properli go back to UIThread if error ocures.
+}
+
+-------
+public async void DoStuff() //Is very bad - do not use this, exception (if exists) will be ignored.
+public async Task DoStuff() // Better
+
+async Task Good(){
+	throw new Exception("Find me on task");
+}
+
+async void Bad(){
+	throw new Exception("No one can catch me");
+}
+
+-------
+
+Do not use:
+
+_someTask.Result
+
+_someTask().Wait() //this is same as sync (not async)
+
+-------
+
+Task:
+
+- execute work on different thread
+
+- Get the result on from async operation
+
+- Subscribe to when the operation is done by intrudicing a continuation
+
+- It can tell you if there was an exception
+
+-------
+
+Task.Run(()=> {  });  //Queue this anonyimuse method on the thread pool for execution
+
+Task.Run(Somemethod()); //Queue this method on the thread pool for execution
+
+-----------------
+async / await is better:
+
+var resTask = Task.Run(()=>{
+	...
+	return lines;
+});
+
+resTask.ContinueWith((completedTask) => {});
+
 ------
 async Task Stuff1() {}
 async Task Stuff2() {}
@@ -375,8 +432,19 @@ await Task.WhenAll(tasks);  //first executes first method then second
 
 await Task.Factory.StartNew(Stuff1).ContinueWith((t)=>Stuff2());
 
+-----------------
 
+//Thread1
+Task.Run(()=>{
 
+	//Thread 2
+	Task.Run(()=>{
+
+		//Thread 3
+	});
+	//Thread 2
+});
+//Thread1
 
 ------------
 Records
