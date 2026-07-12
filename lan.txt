@@ -446,6 +446,55 @@ Task.Run(()=>{
 });
 //Thread1
 
+-----------------
+
+Do not use List<T> for parallel operattion, it is not Thread safe.
+
+Use: 
+var coll = new ConcurrentBag(); //Thread safe collection.
+
+-----------------
+Asynchronous Stream:
+
+public async IAsyncEnumerable<StockPrice> GetAllStockPrices([EnumaratorCancelation] CancelationToken ct = default){
+
+	//Adding 
+	await Task.Delay(500, ct);
+	
+	yield return new StockPrice {  }  //yield nekaj se je dodalo
+	
+	//Adding 
+	await Task.Delay(500, ct);
+	
+	yield return new StockPrice {  }
+	
+	....
+}
+
+var enumerator = service.GetAllStockPrices();
+
+await foreach(var price in enumerator){ //Vsakič ko se doda se sproži: await foreach(...
+	//Update UI - Updete line by line, so we do not have to wait to read all at once.
+}
+
+or more simple example:
+
+//Procuding stream
+public async IAsyncEnumerable<string> Get(){
+
+	await Task.Delay(500);
+	yield return "Hello";
+
+	await Task.Delay(500);
+	yield return "World";
+}
+
+//Consuming stream
+await foreach(var word in Get())
+{
+	...
+}
+
 ------------
 Records
 ------------
