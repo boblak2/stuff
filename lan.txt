@@ -257,7 +257,7 @@ numbers.Add(a ??= 0);
 
 
 ---------------
-LINQ
+LINQ //Language intergrated query
 -------
 Count:
 
@@ -531,6 +531,37 @@ Parallel.ForEach(list, (el) = >{
 or 
 
 Parallel.for(0, 10, ...);
+
+-------------------
+
+private object _lockObj = new();
+
+lock(_lockObj){
+    //locked code, onlz one thread at the time can access this.
+}
+
+
+ThreadLocal<decimal> tl = new ThreadLocal<decimal>();
+
+AsyncThreadLocal<decimal> tl = new AsyncThreadLocal<decimal>();
+
+
+--------------------
+PLINQ 
+
+ParallerlQuery<T> pquery = source.AsParallel();
+
+IEnumerable<T> squery = query.AsSequential();
+
+var res = Enumerable.Range(0, 100)
+    .AsParallel()
+    .AsOrdered() //sort
+    .Select(compute)
+    .Sum();
+
+res.ForAll(Console.WriteLine);
+
+
 
 ------------
 Records
