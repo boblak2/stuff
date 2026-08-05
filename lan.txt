@@ -474,7 +474,9 @@ public async IAsyncEnumerable<StockPrice> GetAllStockPrices([EnumaratorCancelati
 var enumerator = service.GetAllStockPrices();
 
 await foreach(var price in enumerator){ //Vsakič ko se doda se sproži: await foreach(...
+
 	//Update UI - Updete line by line, so we do not have to wait to read all at once.
+
 }
 
 or more simple example:
@@ -537,7 +539,7 @@ Parallel.for(0, 10, ...);
 private object _lockObj = new();
 
 lock(_lockObj){
-    //locked code, onlz one thread at the time can access this.
+    //locked code, only one thread at the time can access this.
 }
 
 

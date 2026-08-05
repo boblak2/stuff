@@ -94,8 +94,18 @@ ffmpeg -i input -f mpegts udp://hostname:port?pkt_size=188&buffer_size=65535
 -Restream multicast:
 ffmpeg.exe -i udp://239.2.3.1:12345 -map 0:0 -c copy -map 0:1 -c copy -f mpegts udp://192.168.35.100:11024?pkt_size=1316
 
+
+m3u8->mp4
 url="https://burek.com/siqwhto3_fwGEn2I9zdUEA==,1755259200/media=hls4/multi=256x144:144p:,426x240:240p:,854x480:480p:,1280x720:720p:/011/349/069/_TPL_.av1.mp4.m3u8"
 ffmpeg -protocol_whitelist file,http,https,tcp,tls,crypto -i $url -c copy video2.mp4
+
+
+apple preview:
+Run this command to force the video into H.264 video, AAC audio, and a standard YUV 4:2:0 pixel format, 
+which guarantees 100% compatibility across all macOS and iOS devices
+
+ffmpeg -i input.mp4 -c:v libx264 -pix_fmt yuv420p -c:a aac output.mp4
+
 
 Links:
 https://github.com/aler9/rtsp-simple-server
