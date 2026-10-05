@@ -263,6 +263,35 @@ Count:
 
 var numCount = numbers.Count(n => n is > 3 and < 7);
 
+----------
+Where: //filter
+
+List<Game> res = games.Where(i=>i.Title == "Mario");
+
+-----------------------
+Select: //conversion
+List<string> res = games.Select(i=>i.Title);
+
+---------------------
+Any: //Check if exists
+bool exists = games.Any(i=>i.Year > 2010);
+
+--------------------------------
+OrderBy: / OrderByDescending: //Sorting
+
+var sorted = games.OrderBy(g => g.Year);
+
+-------------------
+//Avrage:
+var avg = games.Avrage(g => g.Price);
+
+----------
+Max:
+var max = games.Max(g => g.Price);
+
+Distinct: //removes duplicates
+var list = games.Where(g => g.Ganre).Distinct()
+
 ---------
 Group By
 List<int> numbers = [35, 44, 200, 84, 3987, 4, 199, 329, 446, 208];
@@ -279,7 +308,10 @@ foreach (var group in query)
     }
 }
 
+-----
+Paging (Skip() / Take())
 
+var page = games.Skip(2).Take(2);
 
 ---------------
 Tasks:
