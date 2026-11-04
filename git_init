@@ -212,11 +212,21 @@ git push -u origin master
 or push an existing repository from the command line
 git remote add origin https://github.com/boblak2/my_tutorial.git
 git push -u origin master
+git push -u origin dev
 
 
 set remote
 git remote set-url origin git@gl.digied.si:blaz/moj_telekom_android.git
 git remote -v
+
+
+git remote rm origin //deletes remote
+
+git merge origin/master
+
+git push origin :non_tracking
+or
+git push origin --delete non_tracking
 
 -----------------------------------------------------------------------------------------------
 git stash //stashes working and index
@@ -232,7 +242,7 @@ git stash
 git stash list 
 git stash applay stash@{2}
 
-git stash clear
+git stash clear //delete entire stash
 
 git stash show
 
@@ -287,6 +297,10 @@ git clean -n //samo pove kaj bo odstranil
 Would remove clean-cache.ini
 Would remove clean-untracked.txt
 Would remove clean-stash.html
+
+----------------------
+git checkout -b feature //creats branch and checkouts it
+
 
 -----------------------------------------------------------------------------------------------
 GITLAB youtube tutorila
