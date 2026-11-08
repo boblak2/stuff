@@ -1226,6 +1226,20 @@ public class NetworkStuffTests
 }
 
 
+-------------------------------------------
+MVVM
+-------------------------------------------
+
+┌────────────────┐        ┌───────────────────┐        ┌──────────────────────┐
+│   View (UI)    │        │  ViewModel (Glue) │        │ Model Layer (Engine) │
+│                │        │                   │        │                      │
+│ Displays data  │ ◄────► │ Asks helper for   │ ◄────► │  UserHelper/Service  │ ──► Fetches/Saves
+│ & binds clicks │        │ data, holds state │        │  (Processes users)   │     to DB or API
+└────────────────┘        └───────────────────┘        └──────────────────────┘
+
+A "user helper" class (often called a Service, Repository, or Manager) belongs under the Model layer, 
+or more precisely, it sits alongside your Models as part of your application's Business Logic/Data Layer.
+It definitely does not belong in the ViewModel.
 
 -------------------------------------------
 WPF
@@ -1319,7 +1333,7 @@ In Xaml:
 
 
 ----------------------------------------
-BaseViewModel:
+BaseViewModel: INotifyPropertyChanged
 
 public void SetProperty<T>(ref T storage, T value, string name)
 {
