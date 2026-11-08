@@ -1878,6 +1878,36 @@ aspect ratio - ratio between width and height
 21:9 //ultra widescreen
 32:9 //super widescreen
 
+------------------------------------------------
+Firefox
+------------------------------------------------
+firefox https://example.com
+
+firefox https://example.com & //in background
+
+
+Force a new tab 
+firefox --new-tab https://example.com
+
+Force a new window  
+firefox --new-window https://example.com
+
+Open in Private Browsing    
+firefox --private-window https://example.com
+
+Open multiple URLs  
+firefox url1.com url2.com url3.com
+
+
+On MAC
+open -a "Firefox" https://example.com
+
+or
+nano ~/.zshrc
+alias firefox="/Applications/Firefox.app/Contents/MacOS/firefox"
+source ~/.zshrc //reload terminal
+
+
 ------------------------------------------------------------------------------------------------------------
 ------------------------------------ V I M --------------------------------------------------------------
 ------------------------------------------------------------------------------------------------------------
